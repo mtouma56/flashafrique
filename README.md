@@ -71,3 +71,14 @@ export default defineConfig([
   },
 ])
 ```
+
+## Contributing
+
+We welcome contributions to FlashAfrique! Please read our [Contributing Guidelines](CONTRIBUTING.md) for details on:
+
+- Branching model and workflow
+- Commit message conventions (Conventional Commits)
+- Pull request process and checklist
+- How to run the project locally
+
+Before submitting a pull request, please ensure your code follows our guidelines and passes all linting and build checks.
