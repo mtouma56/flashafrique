@@ -1,0 +1,2 @@
+-- FlashAfrique DB schema (to be applied later by agent/CLI)
+-- v0.0.1
