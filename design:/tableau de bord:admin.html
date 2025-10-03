@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.1">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html class="dark" lang="en"&gt;&lt;head&gt;</p>
+<p class="p1">&lt;meta charset="utf-8"/&gt;</p>
+<p class="p1">&lt;title&gt;FlashAfrique Admin Dashboard&lt;/title&gt;</p>
+<p class="p1">&lt;link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/&gt;</p>
+<p class="p1">&lt;link as="style" href="https://fonts.googleapis.com/css2?display=swap&amp;amp;family=Newsreader:wght@400;500;700;800&amp;amp;family=Noto+Sans:wght@400;500;700;900" onload="this.rel='stylesheet'" rel="stylesheet"/&gt;</p>
+<p class="p1">&lt;link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/&gt;</p>
+<p class="p1">&lt;script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"&gt;&lt;/script&gt;</p>
+<p class="p1">&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>tailwind.config = {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>darkMode: "class",</p>
+<p class="p1"><span class="Apple-converted-space">      </span>theme: {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>extend: {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>colors: {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"primary": "#117dd4",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"background-light": "#f6f7f8",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"background-dark": "#101a22",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>},</p>
+<p class="p1"><span class="Apple-converted-space">          </span>fontFamily: {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"display": ["Newsreader"]</p>
+<p class="p1"><span class="Apple-converted-space">          </span>},</p>
+<p class="p1"><span class="Apple-converted-space">          </span>borderRadius: {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"DEFAULT": "0.125rem",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"lg": "0.25rem",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"xl": "0.5rem",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"full": "0.75rem"</p>
+<p class="p1"><span class="Apple-converted-space">          </span>},</p>
+<p class="p1"><span class="Apple-converted-space">        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/script&gt;</p>
+<p class="p1">&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.material-symbols-outlined {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-variation-settings:</p>
+<p class="p1"><span class="Apple-converted-space">      </span>'FILL' 0,</p>
+<p class="p1"><span class="Apple-converted-space">      </span>'wght' 400,</p>
+<p class="p1"><span class="Apple-converted-space">      </span>'GRAD' 0,</p>
+<p class="p1"><span class="Apple-converted-space">      </span>'opsz' 24</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body class="bg-background-light dark:bg-background-dark font-display text-black dark:text-white"&gt;</p>
+<p class="p1">&lt;div class="flex h-screen"&gt;</p>
+<p class="p1">&lt;aside class="w-64 flex-shrink-0 bg-background-light dark:bg-background-dark border-r border-black/10 dark:border-white/10 flex flex-col"&gt;</p>
+<p class="p1">&lt;div class="h-16 flex items-center px-6 border-b border-black/10 dark:border-white/10"&gt;</p>
+<p class="p1">&lt;h1 class="text-xl font-bold text-black dark:text-white"&gt;FlashAfrique&lt;/h1&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;nav class="flex-1 px-4 py-4 space-y-2"&gt;</p>
+<p class="p1">&lt;a class="flex items-center gap-3 px-4 py-2 rounded-lg bg-primary text-white" href="#"&gt;</p>
+<p class="p1">&lt;span class="material-symbols-outlined"&gt;description&lt;/span&gt;</p>
+<p class="p1">&lt;span class="text-sm font-medium"&gt;Article Management&lt;/span&gt;</p>
+<p class="p1">&lt;/a&gt;</p>
+<p class="p1">&lt;a class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-primary/20 dark:hover:bg-primary/30 text-black dark:text-white" href="#"&gt;</p>
+<p class="p1">&lt;span class="material-symbols-outlined"&gt;rss_feed&lt;/span&gt;</p>
+<p class="p1">&lt;span class="text-sm font-medium"&gt;RSS Feed Management&lt;/span&gt;</p>
+<p class="p1">&lt;/a&gt;</p>
+<p class="p1">&lt;a class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-primary/20 dark:hover:bg-primary/30 text-black dark:text-white" href="#"&gt;</p>
+<p class="p1">&lt;span class="material-symbols-outlined"&gt;group&lt;/span&gt;</p>
+<p class="p1">&lt;span class="text-sm font-medium"&gt;User Management&lt;/span&gt;</p>
+<p class="p1">&lt;/a&gt;</p>
+<p class="p1">&lt;a class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-primary/20 dark:hover:bg-primary/30 text-black dark:text-white" href="#"&gt;</p>
+<p class="p1">&lt;span class="material-symbols-outlined"&gt;settings&lt;/span&gt;</p>
+<p class="p1">&lt;span class="text-sm font-medium"&gt;Settings&lt;/span&gt;</p>
+<p class="p1">&lt;/a&gt;</p>
+<p class="p1">&lt;/nav&gt;</p>
+<p class="p1">&lt;div class="px-4 py-4 border-t border-black/10 dark:border-white/10"&gt;</p>
+<p class="p1">&lt;a class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-primary/20 dark:hover:bg-primary/30 text-black dark:text-white" href="#"&gt;</p>
+<p class="p1">&lt;span class="material-symbols-outlined"&gt;arrow_back&lt;/span&gt;</p>
+<p class="p1">&lt;span class="text-sm font-medium"&gt;Go to site&lt;/span&gt;</p>
+<p class="p1">&lt;/a&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;/aside&gt;</p>
+<p class="p1">&lt;main class="flex-1 flex flex-col overflow-y-auto"&gt;</p>
+<p class="p1">&lt;header class="h-16 flex items-center justify-between px-6 border-b border-black/10 dark:border-white/10"&gt;</p>
+<p class="p1">&lt;h2 class="text-2xl font-bold text-black dark:text-white"&gt;Admin Dashboard&lt;/h2&gt;</p>
+<p class="p1">&lt;/header&gt;</p>
+<p class="p1">&lt;div class="p-6 space-y-8"&gt;</p>
+<p class="p1">&lt;section&gt;</p>
+<p class="p1">&lt;h3 class="text-xl font-bold mb-4 text-black dark:text-white"&gt;Pending Articles for Validation&lt;/h3&gt;</p>
+<p class="p1">&lt;div class="overflow-x-auto rounded-lg border border-black/10 dark:border-white/10 bg-background-light dark:bg-background-dark"&gt;</p>
+<p class="p1">&lt;table class="w-full text-sm text-left"&gt;</p>
+<p class="p1">&lt;thead class="bg-black/5 dark:bg-white/5"&gt;</p>
+<p class="p1">&lt;tr&gt;</p>
+<p class="p1">&lt;th class="px-6 py-3 font-medium text-black dark:text-white" scope="col"&gt;Title&lt;/th&gt;</p>
+<p class="p1">&lt;th class="px-6 py-3 font-medium text-black dark:text-white" scope="col"&gt;Author&lt;/th&gt;</p>
+<p class="p1">&lt;th class="px-6 py-3 font-medium text-black dark:text-white" scope="col"&gt;Category&lt;/th&gt;</p>
+<p class="p1">&lt;th class="px-6 py-3 font-medium text-black dark:text-white" scope="col"&gt;Status&lt;/th&gt;</p>
+<p class="p1">&lt;th class="px-6 py-3 font-medium text-black dark:text-white" scope="col"&gt;Actions&lt;/th&gt;</p>
+<p class="p1">&lt;/tr&gt;</p>
+<p class="p1">&lt;/thead&gt;</p>
+<p class="p1">&lt;tbody&gt;</p>
+<p class="p1">&lt;tr class="border-t border-black/10 dark:border-white/10"&gt;</p>
+<p class="p1">&lt;td class="px-6 py-4 text-black dark:text-white"&gt;Breaking News: Economic Summit in Abidjan&lt;/td&gt;</p>
+<p class="p1">&lt;td class="px-6 py-4 text-black/60 dark:text-white/60"&gt;Jean-Pierre Kouassi&lt;/td&gt;</p>
+<p class="p1">&lt;td class="px-6 py-4"&gt;&lt;span class="px-2 py-1 text-xs font-medium rounded-full bg-primary/20 text-primary"&gt;Economy&lt;/span&gt;&lt;/td&gt;</p>
+<p class="p1">&lt;td class="px-6 py-4"&gt;&lt;span class="px-2 py-1 text-xs font-medium rounded-full bg-primary/20 text-primary"&gt;Pending&lt;/span&gt;&lt;/td&gt;</p>
+<p class="p1">&lt;td class="px-6 py-4"&gt;&lt;button class="px-4 py-2 text-sm font-medium text-white bg-primary rounded-lg hover:bg-primary/80"&gt;Validate&lt;/button&gt;&lt;/td&gt;</p>
+<p class="p1">&lt;/tr&gt;</p>
+<p class="p1">&lt;tr class="border-t border-black/10 dark:border-white/10"&gt;</p>
+<p class="p1">&lt;td class="px-6 py-4 text-black dark:text-white"&gt;Cultural Festival Showcases West African Art&lt;/td&gt;</p>
+<p class="p1">&lt;td class="px-6 py-4 text-black/60 dark:text-white/60"&gt;Fatou Diallo&lt;/td&gt;</p>
+<p class="p1">&lt;td class="px-6 py-4"&gt;&lt;span class="px-2 py-1 text-xs font-medium rounded-full bg-primary/20 text-primary"&gt;Culture&lt;/span&gt;&lt;/td&gt;</p>
+<p class="p1">&lt;td class="px-6 py-4"&gt;&lt;span class="px-2 py-1 text-xs font-medium rounded-full bg-primary/20 text-primary"&gt;Pending&lt;/span&gt;&lt;/td&gt;</p>
+<p class="p1">&lt;td class="px-6 py-4"&gt;&lt;button class="px-4 py-2 text-sm font-medium text-white bg-primary rounded-lg hover:bg-primary/80"&gt;Validate&lt;/button&gt;&lt;/td&gt;</p>
+<p class="p1">&lt;/tr&gt;</p>
+<p class="p1">&lt;tr class="border-t border-black/10 dark:border-white/10"&gt;</p>
+<p class="p1">&lt;td class="px-6 py-4 text-black dark:text-white"&gt;New Infrastructure Project Announced for Yamoussoukro&lt;/td&gt;</p>
+<p class="p1">&lt;td class="px-6 py-4 text-black/60 dark:text-white/60"&gt;Kouame N'Guessan&lt;/td&gt;</p>
+<p class="p1">&lt;td class="px-6 py-4"&gt;&lt;span class="px-2 py-1 text-xs font-medium rounded-full bg-primary/20 text-primary"&gt;Politics&lt;/span&gt;&lt;/td&gt;</p>
+<p class="p1">&lt;td class="px-6 py-4"&gt;&lt;span class="px-2 py-1 text-xs font-medium rounded-full bg-primary/20 text-primary"&gt;Pending&lt;/span&gt;&lt;/td&gt;</p>
+<p class="p1">&lt;td class="px-6 py-4"&gt;&lt;button class="px-4 py-2 text-sm font-medium text-white bg-primary rounded-lg hover:bg-primary/80"&gt;Validate&lt;/button&gt;&lt;/td&gt;</p>
+<p class="p1">&lt;/tr&gt;</p>
+<p class="p1">&lt;/tbody&gt;</p>
+<p class="p1">&lt;/table&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;/section&gt;</p>
+<p class="p1">&lt;section&gt;</p>
+<p class="p1">&lt;h3 class="text-xl font-bold mb-4 text-black dark:text-white"&gt;Recent Activity&lt;/h3&gt;</p>
+<p class="p1">&lt;div class="space-y-6"&gt;</p>
+<p class="p1">&lt;div class="flex gap-4"&gt;</p>
+<p class="p1">&lt;div class="flex flex-col items-center"&gt;</p>
+<p class="p1">&lt;div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center"&gt;</p>
+<p class="p1">&lt;span class="material-symbols-outlined text-primary"&gt;description&lt;/span&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;div class="w-px flex-1 bg-black/10 dark:bg-white/10"&gt;&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;div&gt;</p>
+<p class="p1">&lt;p class="font-medium text-black dark:text-white"&gt;Article 'Breaking News: Economic Summit in Abidjan' submitted by Jean-Pierre Kouassi&lt;/p&gt;</p>
+<p class="p1">&lt;p class="text-sm text-black/60 dark:text-white/60"&gt;2 hours ago&lt;/p&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;div class="flex gap-4"&gt;</p>
+<p class="p1">&lt;div class="flex flex-col items-center"&gt;</p>
+<p class="p1">&lt;div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center"&gt;</p>
+<p class="p1">&lt;span class="material-symbols-outlined text-primary"&gt;person_add&lt;/span&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;div class="w-px flex-1 bg-black/10 dark:bg-white/10"&gt;&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;div&gt;</p>
+<p class="p1">&lt;p class="font-medium text-black dark:text-white"&gt;User Fatou Diallo registered&lt;/p&gt;</p>
+<p class="p1">&lt;p class="text-sm text-black/60 dark:text-white/60"&gt;1 day ago&lt;/p&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;div class="flex gap-4"&gt;</p>
+<p class="p1">&lt;div class="flex flex-col items-center"&gt;</p>
+<p class="p1">&lt;div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center"&gt;</p>
+<p class="p1">&lt;span class="material-symbols-outlined text-primary"&gt;rss_feed&lt;/span&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;div&gt;</p>
+<p class="p1">&lt;p class="font-medium text-black dark:text-white"&gt;RSS Feed 'International News' updated&lt;/p&gt;</p>
+<p class="p1">&lt;p class="text-sm text-black/60 dark:text-white/60"&gt;3 days ago&lt;/p&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;/section&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;/main&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;/body&gt;&lt;/html&gt;</p>
+</body>
+</html>

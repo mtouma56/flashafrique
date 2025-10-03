@@ -1,0 +1,335 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.1">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="en"&gt;&lt;head&gt;</p>
+<p class="p1">&lt;meta charset="utf-8"/&gt;</p>
+<p class="p1">&lt;meta charset="utf-8"/&gt;</p>
+<p class="p1">&lt;link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/&gt;</p>
+<p class="p1">&lt;link as="style" href="https://fonts.googleapis.com/css2?display=swap&amp;amp;family=Newsreader%3Awght%40400%3B500%3B700%3B800&amp;amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900" onload="this.rel='stylesheet'" rel="stylesheet"/&gt;</p>
+<p class="p1">&lt;title&gt;Stitch Design&lt;/title&gt;</p>
+<p class="p1">&lt;link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/&gt;</p>
+<p class="p1">&lt;script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"&gt;&lt;/script&gt;</p>
+<p class="p1">&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>tailwind.config = {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>darkMode: 'class',</p>
+<p class="p1"><span class="Apple-converted-space">        </span>theme: {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>extend: {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>colors: {</p>
+<p class="p1"><span class="Apple-converted-space">              </span>primary: '#117dd4',</p>
+<p class="p1"><span class="Apple-converted-space">              </span>'background-light': '#f6f7f8',</p>
+<p class="p1"><span class="Apple-converted-space">              </span>'background-dark': '#101a22',</p>
+<p class="p1"><span class="Apple-converted-space">            </span>},</p>
+<p class="p1"><span class="Apple-converted-space">            </span>fontFamily: {</p>
+<p class="p1"><span class="Apple-converted-space">              </span>display: ['Newsreader'],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>},</p>
+<p class="p1"><span class="Apple-converted-space">            </span>borderRadius: { DEFAULT: '0.125rem', lg: '0.25rem', xl: '0.5rem', full: '0.75rem' },</p>
+<p class="p1"><span class="Apple-converted-space">          </span>},</p>
+<p class="p1"><span class="Apple-converted-space">        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>};</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body class="bg-background-light dark:bg-background-dark font-display"&gt;</p>
+<p class="p1">&lt;div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden"&gt;</p>
+<p class="p1">&lt;div class="flex h-full grow flex-col"&gt;</p>
+<p class="p1">&lt;div class="w-full bg-background-light py-6 dark:bg-background-dark"&gt;</p>
+<p class="p1">&lt;div class="flex flex-col items-center justify-center gap-4 text-black dark:text-white"&gt;</p>
+<p class="p1">&lt;div class="flex items-center gap-4"&gt;</p>
+<p class="p1">&lt;div class="size-10 text-primary"&gt;</p>
+<p class="p1">&lt;svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"&gt;</p>
+<p class="p1">&lt;path d="M39.5563 34.1455V13.8546C39.5563 15.708 36.8773 17.3437 32.7927 18.3189C30.2914 18.916 27.263 19.2655 24 19.2655C20.737 19.2655 17.7086 18.916 15.2073 18.3189C11.1227 17.3437 8.44365 15.708 8.44365 13.8546V34.1455C8.44365 35.9988 11.1227 37.6346 15.2073 38.6098C17.7086 39.2069 20.737 39.5564 24 39.5564C27.263 39.5564 30.2914 39.2069 32.7927 38.6098C36.8773 37.6346 39.5563 35.9988 39.5563 34.1455Z" fill="currentColor"&gt;&lt;/path&gt;</p>
+<p class="p1">&lt;path clip-rule="evenodd" d="M10.4485 13.8519C10.4749 13.9271 10.6203 14.246 11.379 14.7361C12.298 15.3298 13.7492 15.9145 15.6717 16.3735C18.0007 16.9296 20.8712 17.2655 24 17.2655C27.1288 17.2655 29.9993 16.9296 32.3283 16.3735C34.2508 15.9145 35.702 15.3298 36.621 14.7361C37.3796 14.246 37.5251 13.9271 37.5515 13.8519C37.5287 13.7876 37.4333 13.5973 37.0635 13.2931C36.5266 12.8516 35.6288 12.3647 34.343 11.9175C31.79 11.0295 28.1333 10.4437 24 10.4437C19.8667 10.4437 16.2099 11.0295 13.657 11.9175C12.3712 12.3647 11.4734 12.8516 10.9365 13.2931C10.5667 13.5973 10.4713 13.7876 10.4485 13.8519ZM37.5563 18.7877C36.3176 19.3925 34.8502 19.8839 33.2571 20.2642C30.5836 20.9025 27.3973 21.2655 24 21.2655C20.6027 21.2655 17.4164 20.9025 14.7429 20.2642C13.1498 19.8839 11.6824 19.3925 10.4436 18.7877V34.1275C10.4515 34.1545 10.5427 34.4867 11.379 35.027C12.298 35.6207 13.7492 36.2054 15.6717 36.6644C18.0007 37.2205 20.8712 37.5564 24 37.5564C27.1288 37.5564 29.9993 37.2205 32.3283 36.6644C34.2508 36.2054 35.702 35.6207 36.621 35.027C37.4573 34.4867 37.5485 34.1546 37.5563 34.1275V18.7877ZM41.5563 13.8546V34.1455C41.5563 36.1078 40.158 37.5042 38.7915 38.3869C37.3498 39.3182 35.4192 40.0389 33.2571 40.5551C30.5836 41.1934 27.3973 41.5564 24 41.5564C20.6027 41.5564 17.4164 41.1934 14.7429 40.5551C12.5808 40.0389 10.6502 39.3182 9.20848 38.3869C7.84205 37.5042 6.44365 36.1078 6.44365 34.1455L6.44365 13.8546C6.44365 12.2684 7.37223 11.0454 8.39581 10.2036C9.43325 9.3505 10.8137 8.67141 12.343 8.13948C15.4203 7.06909 19.5418 6.44366 24 6.44366C28.4582 6.44366 32.5797 7.06909 35.657 8.13948C37.1863 8.67141 38.5667 9.3505 39.6042 10.2036C40.6278 11.0454 41.5563 12.2684 41.5563 13.8546Z" fill="currentColor" fill-rule="evenodd"&gt;&lt;/path&gt;</p>
+<p class="p1">&lt;/svg&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;h2 class="text-4xl font-bold"&gt;FlashAfrique&lt;/h2&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;header class="sticky top-0 z-20 flex w-full items-center justify-between whitespace-nowrap border-b border-primary/20 bg-background-light px-10 py-3 dark:bg-background-dark"&gt;</p>
+<p class="p1">&lt;div class="flex items-center gap-8"&gt;</p>
+<p class="p1">&lt;nav class="flex items-center gap-8"&gt;</p>
+<p class="p1">&lt;a class="text-sm font-medium text-black/60 transition-colors hover:text-primary dark:text-white/60 dark:hover:text-primary" href="#"&gt;Politics&lt;/a&gt;</p>
+<p class="p1">&lt;a class="text-sm font-medium text-black/60 transition-colors hover:text-primary dark:text-white/60 dark:hover:text-primary" href="#"&gt;Economy&lt;/a&gt;</p>
+<p class="p1">&lt;a class="text-sm font-medium text-black/60 transition-colors hover:text-primary dark:text-white/60 dark:hover:text-primary" href="#"&gt;Culture&lt;/a&gt;</p>
+<p class="p1">&lt;a class="text-sm font-medium text-black/60 transition-colors hover:text-primary dark:text-white/60 dark:hover:text-primary" href="#"&gt;Sports&lt;/a&gt;</p>
+<p class="p1">&lt;a class="text-sm font-medium text-black/60 transition-colors hover:text-primary dark:text-white/60 dark:hover:text-primary" href="#"&gt;Africa&lt;/a&gt;</p>
+<p class="p1">&lt;a class="text-sm font-medium text-black/60 transition-colors hover:text-primary dark:text-white/60 dark:hover:text-primary" href="#"&gt;World&lt;/a&gt;</p>
+<p class="p1">&lt;/nav&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;div class="flex flex-1 items-center justify-end gap-4"&gt;</p>
+<p class="p1">&lt;label class="relative flex h-10 w-64 items-center"&gt;</p>
+<p class="p1">&lt;div class="pointer-events-none absolute left-3 text-black/40 dark:text-white/40"&gt;</p>
+<p class="p1">&lt;svg fill="currentColor" height="20px" viewBox="0 0 256 256" width="20px" xmlns="http://www.w3.org/2000/svg"&gt;</p>
+<p class="p1">&lt;path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"&gt;&lt;/path&gt;</p>
+<p class="p1">&lt;/svg&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;input class="h-full w-full rounded-full border-none bg-black/5 px-10 text-sm text-black placeholder:text-black/40 focus:outline-none focus:ring-2 focus:ring-primary/50 dark:bg-white/5 dark:text-white dark:placeholder:text-white/40" placeholder="Search" value=""/&gt;</p>
+<p class="p1">&lt;/label&gt;</p>
+<p class="p1">&lt;div class="flex items-center gap-2"&gt;</p>
+<p class="p1">&lt;button class="h-10 rounded-full bg-primary px-4 text-sm font-bold text-white transition-colors hover:bg-primary/90"&gt;Login&lt;/button&gt;</p>
+<p class="p1">&lt;button class="h-10 rounded-full bg-black/5 px-4 text-sm font-bold text-black/80 transition-colors hover:bg-black/10 dark:bg-white/5 dark:text-white/80 dark:hover:bg-white/10"&gt;Register&lt;/button&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;/header&gt;</p>
+<p class="p1">&lt;main class="flex flex-1 justify-center px-10 py-8"&gt;</p>
+<p class="p1">&lt;div class="flex w-full max-w-7xl flex-col gap-12"&gt;</p>
+<p class="p1">&lt;div class="@container"&gt;</p>
+<p class="p1">&lt;div class="group relative flex min-h-[520px] items-end justify-start overflow-hidden rounded-xl bg-cover bg-center bg-no-repeat p-10" style='background-image: linear-gradient(rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.6) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuCBNmYnn01712UssKH2aN5tPcYj1yekzSSEir8w8KAzqYjrrruc6-IsTRVLmmVxly1RmfxSwUMG4NLeFQwFnUUZNqUYx5T5OM4EDpmsKxHsxF-Ej5RWRENB5meB0sMgYxCpUAcITXrdkiO-3gs77Qwx0T-GLXalDv6bV-ROpUP7lQh3ufpBoPVRGPSmTe7F80eKwDHY1-mgzeVntTCRp25OfE9YwY6YsIdD-chvvgJjwvo3LSrWKY-GK1EPyro3ig6xqV10HTG_VjSw");'&gt;</p>
+<p class="p1">&lt;div class="flex max-w-3xl flex-col gap-4 text-left"&gt;</p>
+<p class="p1">&lt;div class="flex flex-col gap-2"&gt;</p>
+<p class="p1">&lt;h1 class="text-5xl font-extrabold text-white"&gt;Breaking News: Presidential Elections Announced&lt;/h1&gt;</p>
+<p class="p1">&lt;h2 class="text-lg font-normal text-white/80"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>The Independent Electoral Commission has officially announced the dates for the upcoming presidential elections, sparking both excitement and debate across the</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>nation.</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/h2&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;button class="mt-2 h-12 w-fit rounded-full bg-primary px-6 text-base font-bold text-white transition-transform group-hover:scale-105"&gt;</p>
+<p class="p1">&lt;span class="truncate"&gt;Read More&lt;/span&gt;</p>
+<p class="p1">&lt;/button&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;section class="flex flex-col gap-6"&gt;</p>
+<p class="p1">&lt;h2 class="text-3xl font-bold text-black dark:text-white"&gt;Top Stories&lt;/h2&gt;</p>
+<p class="p1">&lt;div class="flex gap-4 overflow-x-auto pb-4 [-ms-scrollbar-style:none] [scrollbar-width:none] [&amp;amp;::-webkit-scrollbar]:hidden"&gt;</p>
+<p class="p1">&lt;article class="group flex w-72 shrink-0 flex-col gap-4"&gt;</p>
+<p class="p1">&lt;div class="overflow-hidden rounded-lg"&gt;</p>
+<p class="p1">&lt;div class="aspect-video w-full rounded-lg bg-cover bg-center bg-no-repeat transition-transform duration-300 group-hover:scale-110" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBetw8Nh2lKOC8c145SnR7xbKgVpMlVm5rutkMi4zHMTGCc0JawsYaPHuhz5Y7MgpP79AnJdMCc6eyVBXnsLzl4JBAv7CH_ewAr-PuT6Y4KmjyGYaL6YzuHEiT2NL9A2YtqiOXC_eKNFc6X9TAUKluKYdL8YIhDBo7gFodKsOmuV9YgX42C4ry-GpPkjOofDpcSWwKOLCiGuTXUXGCiLW1jiryfpw8OB-vI67MNDi_rNrpNkC8NoasnUYjulURhA4xO9-CeG8eDqYDq");'&gt;&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;div&gt;</p>
+<p class="p1">&lt;h3 class="font-bold text-black dark:text-white"&gt;Political Rally Draws Massive Crowd&lt;/h3&gt;</p>
+<p class="p1">&lt;p class="text-sm text-black/60 dark:text-white/60"&gt;Thousands gather in Abidjan to support various political factions.&lt;/p&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;/article&gt;</p>
+<p class="p1">&lt;article class="group flex w-72 shrink-0 flex-col gap-4"&gt;</p>
+<p class="p1">&lt;div class="overflow-hidden rounded-lg"&gt;</p>
+<p class="p1">&lt;div class="aspect-video w-full rounded-lg bg-cover bg-center bg-no-repeat transition-transform duration-300 group-hover:scale-110" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCAiOQ2LJqF20V8rupG6Wf2ZNh_q9ZS4hxGHIqGOqeICHstllnMndjpvWskR_MFjjuOOezZgEtE5Mnjdu6N_2nT4zAQjO4X53Okmbelk18VUbv_BAHmSN1GUejuU4wf4C__gk27sRpdADOpZ4KsGhCTvKGeOHWJKh_WQdt3yGg14jyvZEEa1p-IJRI4cHlRCEyhWtELXMDl_DkJK3XKvscZopHEQqeMuoaLiXqPW44fnslgJnKZQgMVEJKGuzKUyT8fyzlLV26qJWaI");'&gt;&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;div&gt;</p>
+<p class="p1">&lt;h3 class="font-bold text-black dark:text-white"&gt;Economic Forum Highlights Growth Opportunities&lt;/h3&gt;</p>
+<p class="p1">&lt;p class="text-sm text-black/60 dark:text-white/60"&gt;Experts discuss strategies for sustainable development and job creation.&lt;/p&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;/article&gt;</p>
+<p class="p1">&lt;article class="group flex w-72 shrink-0 flex-col gap-4"&gt;</p>
+<p class="p1">&lt;div class="overflow-hidden rounded-lg"&gt;</p>
+<p class="p1">&lt;div class="aspect-video w-full rounded-lg bg-cover bg-center bg-no-repeat transition-transform duration-300 group-hover:scale-110" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBNXQ_5yBQ2RXXXZpQGjjWS70OTKulNqe6gAQZQt9JSBaNwrdmjGItcVkyjhvBlRF3PSWpyH1zXeo13zUegogZjJHmyyt6E0gfZm0mgoAbox68BAtBKq-SvlVl33PErcRJLdVr8Ts-pSldJ1O2ClTBrbAQqKcUgTTMSj0MTYrkwwsuxbZfEEpBAxhnMXZTG_GagA4mhYvSfrsUwH8Yhp1OutZgebBZ8eIoUKn2r-oejcSI59RA2fjXz5J84vTUEaBAil0Bsv8J5x-3N");'&gt;&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;div&gt;</p>
+<p class="p1">&lt;h3 class="font-bold text-black dark:text-white"&gt;Cultural Festival Showcases Ivorian Heritage&lt;/h3&gt;</p>
+<p class="p1">&lt;p class="text-sm text-black/60 dark:text-white/60"&gt;Traditional dances, music, and art celebrate the country's rich cultural diversity.&lt;/p&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;/article&gt;</p>
+<p class="p1">&lt;article class="group flex w-72 shrink-0 flex-col gap-4"&gt;</p>
+<p class="p1">&lt;div class="overflow-hidden rounded-lg"&gt;</p>
+<p class="p1">&lt;div class="aspect-video w-full rounded-lg bg-cover bg-center bg-no-repeat transition-transform duration-300 group-hover:scale-110" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCVQH9hB6SYDCqNcfv9vayV1ensTq-Es3EpsQvlV3UwQqxX7bUYFZ5mJ5g5LlVNT7RFsQyG2ELPnFQPqlRKXrnveD72rKwbv9P_Eo4QdVfwLYekXvUX-6RWVT0WVy4e-x-K-OVSz7-wJsDlhSObNp9cKl51aJFctCISiv3D7sLVPmd7kipbFHa5Dp8x6-HvXpWTSSE6s0FyahEoSbyqs2piySQ8sk4bjZqaU59wEeRyPSu-H1KP0z0L6m2_WFdFCa1Dkj7j5UlEy7cC");'&gt;&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;div&gt;</p>
+<p class="p1">&lt;h3 class="font-bold text-black dark:text-white"&gt;National Team Wins Crucial Match&lt;/h3&gt;</p>
+<p class="p1">&lt;p class="text-sm text-black/60 dark:text-white/60"&gt;The Elephants secure a vital victory in their World Cup qualifying campaign.&lt;/p&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;/article&gt;</p>
+<p class="p1">&lt;article class="group flex w-72 shrink-0 flex-col gap-4"&gt;</p>
+<p class="p1">&lt;div class="overflow-hidden rounded-lg"&gt;</p>
+<p class="p1">&lt;div class="aspect-video w-full rounded-lg bg-cover bg-center bg-no-repeat transition-transform duration-300 group-hover:scale-110" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAirTKclpeqWB8ROxwaUyahm3OEkx9YEXq21R7UAjY3GOjuHP0GEj9CDBcOmHuN4UsRnoVHtRD3ij_ZVzicaAfCg27QjSG7XkoiocOIyeaCdwa9gQ7OlJeBDm5mpeDoGlfzIghbrGK1gVAAiNLliHoiXDwn6jiEx19gGh6epZI_H0Ce-TNV9bNi3JK3krHCfe_uHAg54-nkkyFsKKOIbx7nu-EtJNbHHDl3ifMbSe8YZ9D_hRJ96QSO2QRndGjds1lRM9CjGQgb-_4o");'&gt;&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;div&gt;</p>
+<p class="p1">&lt;h3 class="font-bold text-black dark:text-white"&gt;African Leaders Discuss Regional Integration&lt;/h3&gt;</p>
+<p class="p1">&lt;p class="text-sm text-black/60 dark:text-white/60"&gt;Heads of state from across the continent meet to strengthen cooperation.&lt;/p&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;/article&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;/section&gt;</p>
+<p class="p1">&lt;div class="grid grid-cols-1 gap-12 lg:grid-cols-3 lg:gap-8"&gt;</p>
+<p class="p1">&lt;section class="flex flex-col gap-6 lg:col-span-2"&gt;</p>
+<p class="p1">&lt;h2 class="text-3xl font-bold text-black dark:text-white"&gt;Politics&lt;/h2&gt;</p>
+<p class="p1">&lt;div class="grid grid-cols-1 gap-8 sm:grid-cols-2"&gt;</p>
+<p class="p1">&lt;article class="group flex flex-col gap-3"&gt;</p>
+<p class="p1">&lt;div class="overflow-hidden rounded-lg"&gt;</p>
+<p class="p1">&lt;div class="aspect-video w-full rounded-lg bg-cover bg-center bg-no-repeat transition-transform duration-300 group-hover:scale-110" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCGo0DrWmKTJfYTIlbODnDvO2f_QHwK-7H-0_-Kucuw2Gw5nksEXbCXjqbaLOtnNDkFSpT6sI82JAgwfAMBhV5rxKDPtmYLG-jgUdW3fxoUJkKMlECsAKEWMoGr_-sNdE9oeJUX7h_eQrK4lindx1xpJBrWnmp0qNQS7wFKjdcLgIMepfewakd51VNJQsnUMZhoNowkBDncFIFrnqmPU4Ggjfs2LYuSgby_Rm8exY036M3Gg8HAife9eCkZM4aOEW2WU8FvB5HYVCR1");'&gt;&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;div&gt;</p>
+<p class="p1">&lt;h3 class="font-bold text-black dark:text-white"&gt;Government Announces New Economic Policies&lt;/h3&gt;</p>
+<p class="p1">&lt;p class="text-sm text-black/60 dark:text-white/60"&gt;The government unveils a series of measures aimed at boosting economic growth and attracting foreign investment.&lt;/p&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;/article&gt;</p>
+<p class="p1">&lt;article class="group flex flex-col gap-3"&gt;</p>
+<p class="p1">&lt;div class="overflow-hidden rounded-lg"&gt;</p>
+<p class="p1">&lt;div class="aspect-video w-full rounded-lg bg-cover bg-center bg-no-repeat transition-transform duration-300 group-hover:scale-110" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA2lO83IaeI-XjoxmAjjaUslzqYlRBcDcZXurm8uZfp1KGpGExrnBBGvFVnb1xw1IXHszVWngA9j6LqPBy8bTm1yGDIFkM6gpb0hlCJO9nQ33Ll9Mhcp6N7uo9e9QKlMliZheykherOvqUBIYsXJ1tKAOLsjdrE4AkrZAb4Uzl7UTgz_1akkGbVS8Povu08371eWxTYj8VibrHjXlfFTCJ5JWW7hmEPmcvMn7DxfrDYZ9o9R6VBgjOvoATwvrMe1Qu4MAm5S75jK7Eh");'&gt;&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;div&gt;</p>
+<p class="p1">&lt;h3 class="font-bold text-black dark:text-white"&gt;Opposition Parties Criticize Recent Legislation&lt;/h3&gt;</p>
+<p class="p1">&lt;p class="text-sm text-black/60 dark:text-white/60"&gt;Opposition leaders express concerns over the potential impact of the new laws on civil liberties.&lt;/p&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;/article&gt;</p>
+<p class="p1">&lt;article class="group flex flex-col gap-3"&gt;</p>
+<p class="p1">&lt;div class="overflow-hidden rounded-lg"&gt;</p>
+<p class="p1">&lt;div class="aspect-video w-full rounded-lg bg-cover bg-center bg-no-repeat transition-transform duration-300 group-hover:scale-110" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC4ubR9tAAJAqF81JCwgipt9VDTYMrQ7IesdUWZ3jbZDkx5Tr9amhwrRy2rTz-w1fr6CFLkNobNkEnUqQZB5wXWg8t9e6S0Ebr1xTajZgeUBgF5c5smIn7DNhRHLndt9a0frsUNLKtgmyEQeOCW8hXhemYoQXtrnxaWdsC6FsYkmeacl4GCgmfmmopvFL-nccKPRB0pig8wS_4UyvaWfzmTCbQYUnYCNX6tSo3r55Fn15v8J9p6ZXU5tN5jel0kFLc7SJ_yvVqPfmuR");'&gt;&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;div&gt;</p>
+<p class="p1">&lt;h3 class="font-bold text-black dark:text-white"&gt;Parliament Debates Key Reforms&lt;/h3&gt;</p>
+<p class="p1">&lt;p class="text-sm text-black/60 dark:text-white/60"&gt;Lawmakers engage in a heated debate over proposed changes to the electoral code.&lt;/p&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;/article&gt;</p>
+<p class="p1">&lt;article class="group flex flex-col gap-3"&gt;</p>
+<p class="p1">&lt;div class="overflow-hidden rounded-lg"&gt;</p>
+<p class="p1">&lt;div class="aspect-video w-full rounded-lg bg-cover bg-center bg-no-repeat transition-transform duration-300 group-hover:scale-110" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDZQt78qT_3Rr7ph64WFbWNkbe3ndoLcinEjkGhjGBW8mn1uNQ4290HAWbOtJ6yxMVmHLGyLE541R-DfAf7fvK31_o-cktdBhyVVJ6qep9IIR-mTPQQ8T6-t0i-Nqgpe4q6_19XD-HrMho4_UYxyBQ8zTfuwW1fS3CnNUA5zJrVPKMFabaO1RgU4JroZlyP2QY-D412LiiWEzvZG5T5TYrtH75TJePDUYIpGOK6lAlN-voarEUZSGCCNFn6QPaNrQMLwgzmWWNiz9qP");'&gt;&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;div&gt;</p>
+<p class="p1">&lt;h3 class="font-bold text-black dark:text-white"&gt;Local Elections See High Voter Turnout&lt;/h3&gt;</p>
+<p class="p1">&lt;p class="text-sm text-black/60 dark:text-white/60"&gt;Voters across the country participate in local elections to choose their representatives.&lt;/p&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;/article&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;/section&gt;</p>
+<p class="p1">&lt;aside class="flex flex-col gap-6"&gt;</p>
+<p class="p1">&lt;h2 class="text-3xl font-bold text-black dark:text-white"&gt;Trending Topics&lt;/h2&gt;</p>
+<p class="p1">&lt;div class="flex flex-wrap gap-2"&gt;</p>
+<p class="p1">&lt;a class="rounded-full bg-black/5 px-3 py-1 text-sm font-medium text-black/80 transition-colors hover:bg-primary/20 dark:bg-white/5 dark:text-white/80 dark:hover:bg-primary/30" href="#"&gt;Presidential Elections&lt;/a&gt;</p>
+<p class="p1">&lt;a class="rounded-full bg-black/5 px-3 py-1 text-sm font-medium text-black/80 transition-colors hover:bg-primary/20 dark:bg-white/5 dark:text-white/80 dark:hover:bg-primary/30" href="#"&gt;Economic Growth&lt;/a&gt;</p>
+<p class="p1">&lt;a class="rounded-full bg-black/5 px-3 py-1 text-sm font-medium text-black/80 transition-colors hover:bg-primary/20 dark:bg-white/5 dark:text-white/80 dark:hover:bg-primary/30" href="#"&gt;Cultural Heritage&lt;/a&gt;</p>
+<p class="p1">&lt;a class="rounded-full bg-black/5 px-3 py-1 text-sm font-medium text-black/80 transition-colors hover:bg-primary/20 dark:bg-white/5 dark:text-white/80 dark:hover:bg-primary/30" href="#"&gt;National Team&lt;/a&gt;</p>
+<p class="p1">&lt;a class="rounded-full bg-black/5 px-3 py-1 text-sm font-medium text-black/80 transition-colors hover:bg-primary/20 dark:bg-white/5 dark:text-white/80 dark:hover:bg-primary/30" href="#"&gt;Regional Integration&lt;/a&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;h2 class="pt-6 text-3xl font-bold text-black dark:text-white"&gt;Opinion&lt;/h2&gt;</p>
+<p class="p1">&lt;div class="flex flex-col gap-6"&gt;</p>
+<p class="p1">&lt;article class="group flex items-start gap-4"&gt;</p>
+<p class="p1">&lt;div class="h-24 w-32 shrink-0 overflow-hidden rounded-lg bg-cover bg-center bg-no-repeat" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuChpJ4cL0eeRgTtpvyQtN5GN8wx2vQaFzvfqwu9eChO56j3OY8RTxtrYwJJICfmScmXlNc_Nes6Ws5wjP5G6FLQfZxRcn5wcZY4EEm-gDwmoglvkG5O1S03RfQpo8PpGPopOrRnCXrJznAYfB7AUuJU45YokaRzZWLLgxTBWHXk6AIdQByvpuEXIkx1HMkpXwv0e48gh-bSVCnBJnqEsDN_sn-Jw9rV46J5DpPCCsLBpvKplifBB-iNayNPQCaA9bk1pQd0d1Fd2CU8");'&gt;&lt;/div&gt;</p>
+<p class="p1">&lt;div&gt;</p>
+<p class="p1">&lt;p class="text-sm font-semibold text-primary"&gt;Opinion&lt;/p&gt;</p>
+<p class="p1">&lt;h3 class="font-bold text-black group-hover:text-primary dark:text-white dark:group-hover:text-primary"&gt;The Future of Ivorian Politics&lt;/h3&gt;</p>
+<p class="p1">&lt;p class="text-sm text-black/60 dark:text-white/60"&gt;A leading political analyst discusses the key challenges and opportunities.&lt;/p&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;/article&gt;</p>
+<p class="p1">&lt;article class="group flex items-start gap-4"&gt;</p>
+<p class="p1">&lt;div class="h-24 w-32 shrink-0 overflow-hidden rounded-lg bg-cover bg-center bg-no-repeat" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDssw5rlhWr6V1cpuSsBXS_ybuVEqenwC9tsY_349fhmlhtPxFpF5Gkffk09uBW-gMJrfBGe4gcekF5SQdTiw13TaUQYjGP7I960_xwRZCYrP4fu6NVoyp_JH1y8QoFjx1QkzU5KwxR9b4-QcZ9boD6YTRKxh-vt1lh44kAEe-3nG7BNyHb-Oemv4wCa05nHf__axh82C1lr_KmcxND0UYFYAd7eYwINjaSOJH_www1ZbZzvFY5Ajq_df2lrm8XdkiTH5UC0kkhp-1S");'&gt;&lt;/div&gt;</p>
+<p class="p1">&lt;div&gt;</p>
+<p class="p1">&lt;p class="text-sm font-semibold text-primary"&gt;Opinion&lt;/p&gt;</p>
+<p class="p1">&lt;h3 class="font-bold text-black group-hover:text-primary dark:text-white dark:group-hover:text-primary"&gt;Investing in Education for a Brighter Tomorrow&lt;/h3&gt;</p>
+<p class="p1">&lt;p class="text-sm text-black/60 dark:text-white/60"&gt;An education expert argues for increased investment in education.&lt;/p&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;/article&gt;</p>
+<p class="p1">&lt;article class="group flex items-start gap-4"&gt;</p>
+<p class="p1">&lt;div class="h-24 w-32 shrink-0 overflow-hidden rounded-lg bg-cover bg-center bg-no-repeat" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC7Cof27ZT6hmJkSJG7gO4iU3dtHixnLNCJd2HiGQYFPidnWgaFEohHM-7nN1v1uFRZ1-1LF00xvQD5Lm1AjQRZ3GFrsGV61fUriPP_T70nkEhk0vmzdIJ1vP08qKHzi40AzTeIyraBsnzCRo-D-z7xUU2Mkv9HX67o8_5v1j-hllMk6yQO3MJ8vqry7oJnZp02W5xFMDuHdtdLeJ0bRqTXf90oAvEQHcjiL-wQ0Bj44k_bGUKHHeY0UOdXSpAViD40jyLyy6Ri2LBv");'&gt;&lt;/div&gt;</p>
+<p class="p1">&lt;div&gt;</p>
+<p class="p1">&lt;p class="text-sm font-semibold text-primary"&gt;Opinion&lt;/p&gt;</p>
+<p class="p1">&lt;h3 class="font-bold text-black group-hover:text-primary dark:text-white dark:group-hover:text-primary"&gt;The Role of Culture in National Development&lt;/h3&gt;</p>
+<p class="p1">&lt;p class="text-sm text-black/60 dark:text-white/60"&gt;A cultural commentator explores the importance of Ivorian culture.&lt;/p&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;/article&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;/aside&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;section class="flex flex-col gap-6"&gt;</p>
+<p class="p1">&lt;h2 class="text-3xl font-bold text-black dark:text-white"&gt;Economy&lt;/h2&gt;</p>
+<p class="p1">&lt;div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4"&gt;</p>
+<p class="p1">&lt;article class="group flex flex-col gap-3"&gt;</p>
+<p class="p1">&lt;div class="overflow-hidden rounded-lg"&gt;</p>
+<p class="p1">&lt;div class="aspect-video w-full rounded-lg bg-cover bg-center bg-no-repeat transition-transform duration-300 group-hover:scale-110" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDiq0HoPrEGYxGolkEViOW9-8GY_qq8BLXY49pHu1ADMPai6HntWv3PH08xlDR8KgAVVwgBYlojvFxXwGmluvVXCkprhNYgzFyRLfeucU-4gTnhrY4_s00xNd1Np1fIVsuSw8-mEgVF4sknjOOKmaL3s3i2pQAPsUYYnfu4Kk6O8NY5ROxgeML9bmTw8ARMkThQSoFxaGkAl-1sTHKPghPekxQYURyZ2QXe7CBqWgCKzkmFaXW5d6oD-jjZf3OJtQMZwq_Iuzeg06KK");'&gt;&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;div&gt;</p>
+<p class="p1">&lt;h3 class="font-bold text-black dark:text-white"&gt;Cocoa Prices Reach Record Highs&lt;/h3&gt;</p>
+<p class="p1">&lt;p class="text-sm text-black/60 dark:text-white/60"&gt;Favorable weather conditions and increased demand drive cocoa prices to unprecedented levels.&lt;/p&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;/article&gt;</p>
+<p class="p1">&lt;article class="group flex flex-col gap-3"&gt;</p>
+<p class="p1">&lt;div class="overflow-hidden rounded-lg"&gt;</p>
+<p class="p1">&lt;div class="aspect-video w-full rounded-lg bg-cover bg-center bg-no-repeat transition-transform duration-300 group-hover:scale-110" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCEOkj3oz74oAolLi0gA2YgpDbK_3hkKl7x3y1LEKONOk3IhyRcIapnIbUMt90INH808lm-G7ruIOk1-6ifKVWQmhBGMd3_Xwi2bi0ouhofIHtpLJ6j-SfGS1DOk3uXIIFGRxFSxDezY_XKniKXVCcOCPgJO0_WasNEJFnEYFjrnIy0QugfPFGJg_6JIWUg-_6_aaNf3upMTfgpVwMj6xCE0wAyfAp7UJ7FAe0x4l5p9b_ezN1Bslp9d_bBiZFf_pQCx0-Qrc7-XgSc");'&gt;&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;div&gt;</p>
+<p class="p1">&lt;h3 class="font-bold text-black dark:text-white"&gt;New Infrastructure Projects Launched&lt;/h3&gt;</p>
+<p class="p1">&lt;p class="text-sm text-black/60 dark:text-white/60"&gt;The government initiates several large-scale infrastructure projects to improve transportation.&lt;/p&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;/article&gt;</p>
+<p class="p1">&lt;article class="group flex flex-col gap-3"&gt;</p>
+<p class="p1">&lt;div class="overflow-hidden rounded-lg"&gt;</p>
+<p class="p1">&lt;div class="aspect-video w-full rounded-lg bg-cover bg-center bg-no-repeat transition-transform duration-300 group-hover:scale-110" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBpVgL5Tw6fxWKO969XMxMbA8P5TIlHeNI8MGmc0zw2Gxjx97PNx0qaGc0px4ArgjT05z16uEs_SmZgwGSYz9siCvOkvU3E9bYwZ-jCr6otJUeJRUk4yFb-gnx6SRRwP_1SAPfr2DDc9bDDDen4S2bl9r9Y4gZMt_8ciMOD2sQ0BpoklZzee3E4vWR0CO5cFvMC-w0i7c0-majjpM7dfmByWm9e3JxgWQX1FcKLteW3PqlanlKQb1Qy_8NgkfJbkFwZSnA9w46Hp_uC");'&gt;&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;div&gt;</p>
+<p class="p1">&lt;h3 class="font-bold text-black dark:text-white"&gt;Tourism Sector Shows Signs of Recovery&lt;/h3&gt;</p>
+<p class="p1">&lt;p class="text-sm text-black/60 dark:text-white/60"&gt;The tourism industry experiences a resurgence as travel restrictions ease and visitor confidence grows.&lt;/p&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;/article&gt;</p>
+<p class="p1">&lt;article class="group flex flex-col gap-3"&gt;</p>
+<p class="p1">&lt;div class="overflow-hidden rounded-lg"&gt;</p>
+<p class="p1">&lt;div class="aspect-video w-full rounded-lg bg-cover bg-center bg-no-repeat transition-transform duration-300 group-hover:scale-110" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAe2Fpk-WBfr_itR30sbJT26y0CIhH5m0qXeFPocfEgt-RJGn5wPNGDDzKiT6GZQSEK335smnQy1zJnEIfRGfHGLmOt4-yh1noqwklo00cKVer1EMUDaXUHNXREaJCjgPBWmAeAE1KdjhSrYxPyQCPflBf2d0jlMkpljNZrY3Akx1mutQkdLoOFoyQGPdBfWyh70Fha6jOt_hMGpcyvMH4JdIdoVFRtcAW0SWpjb8JP0My7aObonIovX2SmE6Ue0h-olTyO99uXm55d");'&gt;&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;div&gt;</p>
+<p class="p1">&lt;h3 class="font-bold text-black dark:text-white"&gt;Unemployment Rate Declines&lt;/h3&gt;</p>
+<p class="p1">&lt;p class="text-sm text-black/60 dark:text-white/60"&gt;Official statistics indicate a decrease in the unemployment rate, signaling positive economic trends.&lt;/p&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;/article&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;/section&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;/main&gt;</p>
+<p class="p1">&lt;footer class="mt-12 border-t border-primary/20 bg-background-light px-10 py-12 dark:bg-background-dark"&gt;</p>
+<p class="p1">&lt;div class="mx-auto w-full max-w-7xl"&gt;</p>
+<p class="p1">&lt;div class="grid grid-cols-1 gap-12 md:grid-cols-4 lg:grid-cols-6"&gt;</p>
+<p class="p1">&lt;div class="flex flex-col gap-4 md:col-span-4 lg:col-span-2"&gt;</p>
+<p class="p1">&lt;div class="flex items-center gap-4 text-black dark:text-white"&gt;</p>
+<p class="p1">&lt;div class="size-8 text-primary"&gt;</p>
+<p class="p1">&lt;svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"&gt;</p>
+<p class="p1">&lt;path d="M39.5563 34.1455V13.8546C39.5563 15.708 36.8773 17.3437 32.7927 18.3189C30.2914 18.916 27.263 19.2655 24 19.2655C20.737 19.2655 17.7086 18.916 15.2073 18.3189C11.1227 17.3437 8.44365 15.708 8.44365 13.8546V34.1455C8.44365 35.9988 11.1227 37.6346 15.2073 38.6098C17.7086 39.2069 20.737 39.5564 24 39.5564C27.263 39.5564 30.2914 39.2069 32.7927 38.6098C36.8773 37.6346 39.5563 35.9988 39.5563 34.1455Z" fill="currentColor"&gt;&lt;/path&gt;</p>
+<p class="p1">&lt;path clip-rule="evenodd" d="M10.4485 13.8519C10.4749 13.9271 10.6203 14.246 11.379 14.7361C12.298 15.3298 13.7492 15.9145 15.6717 16.3735C18.0007 16.9296 20.8712 17.2655 24 17.2655C27.1288 17.2655 29.9993 16.9296 32.3283 16.3735C34.2508 15.9145 35.702 15.3298 36.621 14.7361C37.3796 14.246 37.5251 13.9271 37.5515 13.8519C37.5287 13.7876 37.4333 13.5973 37.0635 13.2931C36.5266 12.8516 35.6288 12.3647 34.343 11.9175C31.79 11.0295 28.1333 10.4437 24 10.4437C19.8667 10.4437 16.2099 11.0295 13.657 11.9175C12.3712 12.3647 11.4734 12.8516 10.9365 13.2931C10.5667 13.5973 10.4713 13.7876 10.4485 13.8519ZM37.5563 18.7877C36.3176 19.3925 34.8502 19.8839 33.2571 20.2642C30.5836 20.9025 27.3973 21.2655 24 21.2655C20.6027 21.2655 17.4164 20.9025 14.7429 20.2642C13.1498 19.8839 11.6824 19.3925 10.4436 18.7877V34.1275C10.4515 34.1545 10.5427 34.4867 11.379 35.027C12.298 35.6207 13.7492 36.2054 15.6717 36.6644C18.0007 37.2205 20.8712 37.5564 24 37.5564C27.1288 37.5564 29.9993 37.2205 32.3283 36.6644C34.2508 36.2054 35.702 35.6207 36.621 35.027C37.4573 34.4867 37.5485 34.1546 37.5563 34.1275V18.7877ZM41.5563 13.8546V34.1455C41.5563 36.1078 40.158 37.5042 38.7915 38.3869C37.3498 39.3182 35.4192 40.0389 33.2571 40.5551C30.5836 41.1934 27.3973 41.5564 24 41.5564C20.6027 41.5564 17.4164 41.1934 14.7429 40.5551C12.5808 40.0389 10.6502 39.3182 9.20848 38.3869C7.84205 37.5042 6.44365 36.1078 6.44365 34.1455L6.44365 13.8546C6.44365 12.2684 7.37223 11.0454 8.39581 10.2036C9.43325 9.3505 10.8137 8.67141 12.343 8.13948C15.4203 7.06909 19.5418 6.44366 24 6.44366C28.4582 6.44366 32.5797 7.06909 35.657 8.13948C37.1863 8.67141 38.5667 9.3505 39.6042 10.2036C40.6278 11.0454 41.5563 12.2684 41.5563 13.8546Z" fill="currentColor" fill-rule="evenodd"&gt;&lt;/path&gt;</p>
+<p class="p1">&lt;/svg&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;h2 class="text-2xl font-bold"&gt;FlashAfrique&lt;/h2&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;p class="text-sm text-black/60 dark:text-white/60"&gt;Your source for news and analysis on Côte d'Ivoire and the UEMOA/CEDEAO region.&lt;/p&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;div class="flex flex-col gap-4"&gt;</p>
+<p class="p1">&lt;h3 class="text-sm font-bold uppercase tracking-wider text-black dark:text-white"&gt;Sections&lt;/h3&gt;</p>
+<p class="p1">&lt;nav class="flex flex-col gap-2"&gt;</p>
+<p class="p1">&lt;a class="text-sm text-black/60 transition-colors hover:text-primary dark:text-white/60 dark:hover:text-primary" href="#"&gt;Politics&lt;/a&gt;</p>
+<p class="p1">&lt;a class="text-sm text-black/60 transition-colors hover:text-primary dark:text-white/60 dark:hover:text-primary" href="#"&gt;Economy&lt;/a&gt;</p>
+<p class="p1">&lt;a class="text-sm text-black/60 transition-colors hover:text-primary dark:text-white/60 dark:hover:text-primary" href="#"&gt;Culture&lt;/a&gt;</p>
+<p class="p1">&lt;a class="text-sm text-black/60 transition-colors hover:text-primary dark:text-white/60 dark:hover:text-primary" href="#"&gt;Sports&lt;/a&gt;</p>
+<p class="p1">&lt;a class="text-sm text-black/60 transition-colors hover:text-primary dark:text-white/60 dark:hover:text-primary" href="#"&gt;Africa&lt;/a&gt;</p>
+<p class="p1">&lt;/nav&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;div class="flex flex-col gap-4"&gt;</p>
+<p class="p1">&lt;h3 class="text-sm font-bold uppercase tracking-wider text-black dark:text-white"&gt;About&lt;/h3&gt;</p>
+<p class="p1">&lt;nav class="flex flex-col gap-2"&gt;</p>
+<p class="p1">&lt;a class="text-sm text-black/60 transition-colors hover:text-primary dark:text-white/60 dark:hover:text-primary" href="#"&gt;About Us&lt;/a&gt;</p>
+<p class="p1">&lt;a class="text-sm text-black/60 transition-colors hover:text-primary dark:text-white/60 dark:hover:text-primary" href="#"&gt;Contact Us&lt;/a&gt;</p>
+<p class="p1">&lt;a class="text-sm text-black/60 transition-colors hover:text-primary dark:text-white/60 dark:hover:text-primary" href="#"&gt;Careers&lt;/a&gt;</p>
+<p class="p1">&lt;a class="text-sm text-black/60 transition-colors hover:text-primary dark:text-white/60 dark:hover:text-primary" href="#"&gt;Press&lt;/a&gt;</p>
+<p class="p1">&lt;/nav&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;div class="flex flex-col gap-4 md:col-span-2 lg:col-span-2"&gt;</p>
+<p class="p1">&lt;h3 class="text-sm font-bold uppercase tracking-wider text-black dark:text-white"&gt;Newsletter&lt;/h3&gt;</p>
+<p class="p1">&lt;p class="text-sm text-black/60 dark:text-white/60"&gt;Subscribe to our newsletter to get the latest news and updates.&lt;/p&gt;</p>
+<p class="p1">&lt;form class="flex w-full items-center gap-2"&gt;</p>
+<p class="p1">&lt;input class="h-10 w-full flex-1 rounded-lg border-none bg-black/5 px-4 text-sm text-black placeholder:text-black/40 focus:outline-none focus:ring-2 focus:ring-primary/50 dark:bg-white/5 dark:text-white dark:placeholder:text-white/40" placeholder="Enter your email" type="email"/&gt;</p>
+<p class="p1">&lt;button class="flex h-10 items-center justify-center rounded-lg bg-primary px-4 text-sm font-bold text-white transition-colors hover:bg-primary/90"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>Subscribe</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;/button&gt;</p>
+<p class="p1">&lt;/form&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;div class="mt-12 flex flex-col items-center justify-between gap-6 border-t border-primary/20 pt-8 sm:flex-row"&gt;</p>
+<p class="p1">&lt;p class="text-sm text-black/60 dark:text-white/60"&gt;© 2024 FlashAfrique. All rights reserved.&lt;/p&gt;</p>
+<p class="p1">&lt;div class="flex items-center gap-4"&gt;</p>
+<p class="p1">&lt;a class="text-sm text-black/60 transition-colors hover:text-primary dark:text-white/60 dark:hover:text-primary" href="#"&gt;Terms of Service&lt;/a&gt;</p>
+<p class="p1">&lt;a class="text-sm text-black/60 transition-colors hover:text-primary dark:text-white/60 dark:hover:text-primary" href="#"&gt;Privacy Policy&lt;/a&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;/footer&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;/body&gt;&lt;/html&gt;</p>
+</body>
+</html>

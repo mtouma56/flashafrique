@@ -1,0 +1,224 @@
+import React, { useState, useMemo, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { supabase } from '../lib/supabaseClient';
+import CategoryHeader from '../components/CategoryHeader';
+import FilterBar from '../components/FilterBar';
+import ArticleList from '../components/ArticleList';
+import Pagination from '../components/Pagination';
+
+// Types
+export interface Article {
+  id: number;
+  title: string;
+  summary: string;
+  image_url: string;
+  category: string;
+  country: string;
+  source: string;
+  publish_at: string;
+  status?: string;
+  created_at?: string;
+}
+
+
+// Fonction pour mapper le slug de la route vers la catégorie DB (FR)
+const mapSlug = (s: string): string => {
+  const k = s.toLowerCase();
+  if (['politics', 'politique'].includes(k)) return 'politique';
+  if (['economy', 'économie', 'economie'].includes(k)) return 'economie';
+  if (['culture'].includes(k)) return 'culture';
+  if (['sport', 'sports'].includes(k)) return 'sport';
+  if (['society', 'société', 'societe'].includes(k)) return 'societe';
+  return k;
+};
+
+// Fonction pour capitaliser et formater le nom de la catégorie
+const formatCategoryName = (slug: string): string => {
+  const categoryMap: { [key: string]: string } = {
+    'politics': 'Politique',
+    'economy': 'Économie',
+    'society': 'Société',
+    'culture': 'Culture',
+    'sports': 'Sports',
+    'economie': 'Économie',
+    'politique': 'Politique',
+    'societe': 'Société'
+  };
+  
+  return categoryMap[slug.toLowerCase()] || slug.charAt(0).toUpperCase() + slug.slice(1);
+};
+
+const CategoryPage: React.FC = () => {
+  const { slug } = useParams<{ slug: string }>();
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCountry, setSelectedCountry] = useState<string>('');
+  const [selectedSource, setSelectedSource] = useState<string>('');
+  const [selectedDate, setSelectedDate] = useState<string>('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(12);
+  const [totalCount, setTotalCount] = useState(0);
+
+  const categoryName = formatCategoryName(slug || 'all');
+
+  // Fetch articles from Supabase on mount and when slug changes
+  useEffect(() => {
+    const fetchArticles = async () => {
+      if (!slug) return;
+      
+      setLoading(true);
+      setError(null);
+      
+      try {
+        const dbCategory = mapSlug(slug);
+        console.log('CategoryPage fetch → slug:', slug, '→ dbCategory:', dbCategory);
+
+        const { data, error: fetchError, count } = await supabase
+          .from('articles')
+          .select('*', { count: 'exact' })
+          .eq('category', dbCategory)
+          .eq('status', 'approved')
+          .lte('publish_at', new Date().toISOString())
+          .order('publish_at', { ascending: false })
+          .range((currentPage - 1) * pageSize, currentPage * pageSize - 1);
+
+        if (fetchError) throw fetchError;
+        
+        setArticles(data || []);
+        setTotalCount(count || 0);
+      } catch (err) {
+        console.error('Error fetching articles:', err);
+        setError(err instanceof Error ? err.message : 'Une erreur est survenue lors du chargement des articles');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchArticles();
+  }, [slug, currentPage, pageSize]);
+
+  // Filtrage des articles côté client
+  const filteredArticles = useMemo(() => {
+    return articles.filter(article => {
+      const matchesSearch = !searchQuery || 
+        article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        article.summary.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesCountry = !selectedCountry || article.country === selectedCountry;
+      const matchesSource = !selectedSource || article.source === selectedSource;
+      const matchesDate = !selectedDate || article.publish_at.startsWith(selectedDate);
+      
+      return matchesSearch && matchesCountry && matchesSource && matchesDate;
+    });
+  }, [articles, searchQuery, selectedCountry, selectedSource, selectedDate]);
+
+  // Pagination
+  const totalPages = Math.ceil(filteredArticles.length / pageSize);
+  const paginatedArticles = useMemo(() => {
+    const startIndex = (currentPage - 1) * pageSize;
+    return filteredArticles.slice(startIndex, startIndex + pageSize);
+  }, [filteredArticles, currentPage, pageSize]);
+
+  // Extraire les valeurs uniques pour les filtres
+  const countries = useMemo(() => 
+    Array.from(new Set(articles.map(a => a.country))).filter(Boolean),
+    [articles]
+  );
+  const sources = useMemo(() => 
+    Array.from(new Set(articles.map(a => a.source))).filter(Boolean),
+    [articles]
+  );
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handlePageSizeChange = (size: number) => {
+    setPageSize(size);
+    setCurrentPage(1);
+  };
+
+  return (
+    <main className="w-full flex-1">
+          <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+            <div className="flex flex-col gap-8">
+              <CategoryHeader 
+                title={categoryName}
+                searchQuery={searchQuery}
+                onSearchChange={setSearchQuery}
+              />
+
+              <FilterBar
+                countries={countries}
+                sources={sources}
+                selectedCountry={selectedCountry}
+                selectedSource={selectedSource}
+                selectedDate={selectedDate}
+                onCountryChange={setSelectedCountry}
+                onSourceChange={setSelectedSource}
+                onDateChange={setSelectedDate}
+                pageSize={pageSize}
+                onPageSizeChange={handlePageSizeChange}
+              />
+
+              {loading ? (
+                <div className="flex items-center justify-center py-12">
+                  <div className="flex flex-col items-center gap-4">
+                    <div className="h-12 w-12 animate-spin rounded-full border-4 border-gray-300 border-t-red-600 dark:border-gray-700 dark:border-t-red-500"></div>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">Chargement des articles...</p>
+                  </div>
+                </div>
+              ) : error ? (
+                <div className="rounded-lg border border-red-200 bg-red-50 p-6 dark:border-red-900 dark:bg-red-950">
+                  <div className="flex items-start gap-3">
+                    <svg className="h-6 w-6 flex-shrink-0 text-red-600 dark:text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <div>
+                      <h3 className="font-semibold text-red-900 dark:text-red-200">Erreur de chargement</h3>
+                      <p className="mt-1 text-sm text-red-700 dark:text-red-300">{error}</p>
+                      <button 
+                        onClick={() => window.location.reload()} 
+                        className="mt-3 rounded-md bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-600"
+                      >
+                        Réessayer
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ) : filteredArticles.length === 0 ? (
+                <div className="flex items-center justify-center py-12">
+                  <div className="text-center">
+                    <svg className="mx-auto h-12 w-12 text-gray-400 dark:text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    <h3 className="mt-4 text-lg font-semibold text-gray-900 dark:text-gray-100">Aucun article trouvé</h3>
+                    <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                      {totalCount === 0 
+                        ? `Aucun article trouvé pour la catégorie "${slug ? mapSlug(slug) : 'unknown'}".`
+                        : 'Aucun article ne correspond à vos critères de recherche.'}
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <ArticleList articles={paginatedArticles} />
+
+                  {totalPages > 1 && (
+                    <Pagination
+                      currentPage={currentPage}
+                      totalPages={totalPages}
+                      onPageChange={handlePageChange}
+                    />
+                  )}
+                </>
+              )}
+            </div>
+          </div>
+    </main>
+  );
+};
+
+export default CategoryPage;

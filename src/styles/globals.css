@@ -1,0 +1,260 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@800;900&family=Inter:wght@400;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Premium Light theme colors */
+    --bg: 210 20% 98%;
+    --card: 0 0% 100%;
+    --fg: 222 47% 11%;
+    --muted: 215 16% 47%;
+    --accent: 221 83% 53%;
+    --accent-2: 222 47% 11%;
+    --error: 20 90% 48%;
+  }
+
+  .dark {
+    /* Premium Dark theme colors - AA Contrast Compliant */
+    --bg: 222 47% 11%;
+    --card: 217 33% 17%;
+    --fg: 210 20% 98%;
+    --muted: 215 20% 70%;
+    --accent: 217 91% 65%;
+    --accent-2: 142 71% 50%;
+    --error: 20 90% 65%;
+  }
+
+  * {
+    @apply border-fg/10;
+  }
+
+  html {
+    @apply scroll-smooth;
+    font-size: 16px;
+  }
+
+  body {
+    @apply bg-bg font-sans antialiased min-h-screen leading-relaxed;
+    color: hsl(var(--fg) / 0.9);
+    margin: 0;
+  }
+
+  ::selection {
+    background-color: hsl(var(--accent) / 0.15);
+    color: hsl(var(--fg));
+  }
+
+  /* Editorial Typography hierarchy */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif text-fg;
+    font-weight: 900;
+    line-height: 1.15;
+  }
+
+  h1 {
+    font-size: clamp(2.2rem, 1.6rem + 1.8vw, 3.2rem);
+    letter-spacing: -0.02em;
+  }
+
+  h2 {
+    font-size: clamp(1.8rem, 1.4rem + 1.2vw, 2.4rem);
+    font-weight: 800;
+    letter-spacing: -0.01em;
+  }
+
+  h3 {
+    font-size: clamp(1.4rem, 1.2rem + 0.8vw, 1.8rem);
+    font-weight: 800;
+    letter-spacing: -0.01em;
+  }
+
+  h4 {
+    @apply text-xl md:text-2xl;
+    font-weight: 700;
+  }
+
+  h5 {
+    @apply text-lg md:text-xl;
+    font-weight: 700;
+  }
+
+  h6 {
+    @apply text-base md:text-lg;
+    font-weight: 700;
+  }
+
+  p {
+    @apply text-base leading-relaxed;
+    color: hsl(var(--fg) / 0.9);
+  }
+
+  a {
+    color: hsl(var(--accent));
+    @apply transition-colors duration-200;
+  }
+  
+  a:hover {
+    color: hsl(var(--accent-2));
+  }
+
+  /* Premium Prose styles for articles */
+  .prose {
+    @apply max-w-none;
+    color: hsl(var(--fg) / 0.9);
+    font-size: 1.0625rem;
+    line-height: 1.75;
+  }
+
+  .prose h1,
+  .prose h2,
+  .prose h3,
+  .prose h4,
+  .prose h5,
+  .prose h6 {
+    font-family: 'Merriweather', Georgia, serif;
+    font-weight: 800;
+    color: hsl(var(--fg));
+    letter-spacing: -0.01em;
+  }
+
+  .prose h1 {
+    font-size: clamp(1.8rem, 1.4rem + 1.2vw, 2.4rem);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    @apply mb-6 mt-8;
+  }
+
+  .prose h2 {
+    font-size: clamp(1.5rem, 1.2rem + 0.9vw, 2rem);
+    @apply mb-5 mt-8;
+  }
+
+  .prose h3 {
+    font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.6rem);
+    @apply mb-4 mt-6;
+  }
+
+  .prose p {
+    @apply mb-5;
+    line-height: 1.75;
+  }
+
+  .prose a {
+    color: hsl(var(--accent));
+    text-decoration: none;
+    border-bottom: 1px solid hsl(var(--accent) / 0.3);
+    @apply transition-all duration-200;
+  }
+  
+  .prose a:hover {
+    color: hsl(var(--accent-2));
+    border-bottom-color: hsl(var(--accent-2) / 0.5);
+  }
+
+  .prose strong {
+    font-weight: 600;
+    color: hsl(var(--fg));
+  }
+
+  .prose em {
+    font-style: italic;
+  }
+
+  .prose blockquote {
+    border-left: 3px solid hsl(var(--accent));
+    padding-left: 1.5rem;
+    padding-right: 1rem;
+    margin: 2rem 0;
+    font-style: italic;
+    color: hsl(var(--muted));
+    font-size: 1.125rem;
+    line-height: 1.6;
+  }
+
+  .prose blockquote p {
+    margin: 0;
+  }
+
+  .prose ul,
+  .prose ol {
+    margin: 1.5rem 0;
+    padding-left: 1.75rem;
+  }
+
+  .prose ul {
+    list-style-type: disc;
+  }
+
+  .prose ol {
+    list-style-type: decimal;
+  }
+
+  .prose li {
+    margin-bottom: 0.75rem;
+    padding-left: 0.25rem;
+  }
+
+  .prose li::marker {
+    color: hsl(var(--accent));
+    font-weight: 600;
+  }
+
+  .prose img {
+    border-radius: 0.5rem;
+    margin: 1.5rem 0;
+    width: 100%;
+  }
+
+  .prose figcaption {
+    color: hsl(var(--muted));
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+    text-align: center;
+  }
+
+  .prose code {
+    background-color: hsl(var(--card));
+    padding: 0.125rem 0.375rem;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+    font-family: monospace;
+  }
+
+  .prose pre {
+    background-color: hsl(var(--card));
+    padding: 1rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+  }
+
+  .prose pre code {
+    background: transparent;
+    padding: 0;
+  }
+
+  .prose hr {
+    border-color: hsl(var(--fg) / 0.1);
+    margin: 2rem 0;
+  }
+
+  .prose table {
+    width: 100%;
+    margin: 1.5rem 0;
+  }
+
+  .prose th {
+    background-color: hsl(var(--card));
+    font-weight: 600;
+    padding: 0.75rem;
+    text-align: left;
+  }
+
+  .prose td {
+    border-top: 1px solid hsl(var(--fg) / 0.1);
+    padding: 0.75rem;
+  }
+}
