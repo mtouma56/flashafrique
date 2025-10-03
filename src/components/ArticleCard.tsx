@@ -13,9 +13,14 @@ const ArticleCard = ({ id, title, description, imageUrl, onClick }: ArticleCardP
     <Link to={`/articles/${id}`} onClick={onClick}>
       <article className="group flex flex-col gap-3">
         <div className="overflow-hidden rounded-lg">
-          <div 
-            className="aspect-video w-full rounded-lg bg-cover bg-center bg-no-repeat transition-transform duration-300 group-hover:scale-110"
-            style={{ backgroundImage: `url("${imageUrl}")` }}
+          <img
+            src={`${imageUrl}?w=1200&q=80`}
+            srcSet={`${imageUrl}?w=600&q=70 600w, ${imageUrl}?w=900&q=70 900w, ${imageUrl}?w=1200&q=80 1200w`}
+            sizes="(max-width: 768px) 100vw, 50vw"
+            alt={title}
+            loading="lazy"
+            decoding="async"
+            className="aspect-video w-full rounded-lg object-cover transition-transform duration-300 group-hover:scale-110"
           />
         </div>
         <div>

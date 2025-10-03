@@ -26,13 +26,15 @@ const HomePage = () => {
       setLoading(true);
       setError(null);
 
-      const { data, error: fetchError } = await supabase
+      const query = supabase
         .from('articles')
-        .select('*')
+        .select('id,title,summary,image_url,category,publish_at')
         .eq('status', 'approved')
         .lte('publish_at', new Date().toISOString())
         .order('publish_at', { ascending: false })
         .limit(6);
+
+      const [{ data, error: fetchError }] = await Promise.all([query]);
 
       console.log(fetchError);
 

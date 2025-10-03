@@ -1,13 +1,22 @@
+import { lazy, Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import Layout from './components/Layout';
 import HomePage from './pages/HomePage';
 import ArticleDetailPage from './pages/ArticleDetailPage';
-import CategoryPage from './pages/CategoryPage';
-import { SearchPage } from './pages/SearchPage';
-import AdminDashboard from './pages/AdminDashboard';
 import AuthCallback from './pages/AuthCallback';
 import NotFoundPage from './pages/NotFoundPage';
 import ProtectedAdminRoute from './components/ProtectedAdminRoute';
+
+// Lazy-loaded routes
+const CategoryPage = lazy(() => import('./pages/CategoryPage'));
+const SearchPage = lazy(() => import('./pages/SearchPage').then(m => ({ default: m.SearchPage })));
+const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
+
+const LoadingFallback = () => (
+  <div className="flex flex-1 items-center justify-center p-8">
+    <div className="h-12 w-12 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent" />
+  </div>
+);
 
 export const router = createBrowserRouter([
   {
@@ -24,11 +33,19 @@ export const router = createBrowserRouter([
       },
       {
         path: 'category/:slug',
-        element: <CategoryPage />,
+        element: (
+          <Suspense fallback={<LoadingFallback />}>
+            <CategoryPage />
+          </Suspense>
+        ),
       },
       {
         path: 'search',
-        element: <SearchPage />,
+        element: (
+          <Suspense fallback={<LoadingFallback />}>
+            <SearchPage />
+          </Suspense>
+        ),
       },
       {
         path: 'auth/callback',
@@ -37,9 +54,11 @@ export const router = createBrowserRouter([
       {
         path: 'admin',
         element: (
-          <ProtectedAdminRoute>
-            <AdminDashboard />
-          </ProtectedAdminRoute>
+          <Suspense fallback={<LoadingFallback />}>
+            <ProtectedAdminRoute>
+              <AdminDashboard />
+            </ProtectedAdminRoute>
+          </Suspense>
         ),
       },
       {
