@@ -1,4 +1,4 @@
-import { Helmet } from 'react-helmet-async';
+import { Helmet } from "react-helmet-async";
 
 interface ArticleStructuredDataProps {
   title: string;
@@ -11,6 +11,10 @@ interface ArticleStructuredDataProps {
   url: string;
 }
 
+const siteUrl = (import.meta.env.VITE_SITE_URL as string | undefined)?.replace(/\/+$/, "") ?? "https://flashafrique.vercel.app";
+
+const sanitiseText = (value: string) => value.replace(/\s+/g, " ").trim();
+
 export const ArticleStructuredData = ({
   title,
   description,
@@ -19,42 +23,39 @@ export const ArticleStructuredData = ({
   modifiedTime,
   author,
   category,
-  url
+  url,
 }: ArticleStructuredDataProps) => {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "NewsArticle",
-    "headline": title,
-    "description": description,
-    "image": [image],
-    "datePublished": publishedTime,
-    "dateModified": modifiedTime || publishedTime,
-    "author": {
-      "@type": "Organization",
-      "name": author,
-      "url": "https://flashafrique.vercel.app"
+    headline: sanitiseText(title),
+    description: sanitiseText(description),
+    image: [image],
+    datePublished: publishedTime,
+    dateModified: modifiedTime || publishedTime,
+    author: {
+      "@type": "Person",
+      name: author,
     },
-    "publisher": {
+    publisher: {
       "@type": "Organization",
-      "name": "FlashAfrique",
-      "logo": {
+      name: "FlashAfrique",
+      logo: {
         "@type": "ImageObject",
-        "url": "https://flashafrique.vercel.app/favicon.ico"
-      }
+        url: `${siteUrl}/icon-512.png`,
+      },
     },
-    "articleSection": category,
-    "inLanguage": "fr-FR",
-    "mainEntityOfPage": {
+    articleSection: category,
+    inLanguage: "fr-FR",
+    mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": url
-    }
+      "@id": url,
+    },
   };
 
   return (
     <Helmet>
-      <script type="application/ld+json">
-        {JSON.stringify(structuredData)}
-      </script>
+      <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
     </Helmet>
   );
 };

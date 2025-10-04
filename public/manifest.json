@@ -1,12 +1,16 @@
 {
   "name": "FlashAfrique - Actualités d'Afrique",
   "short_name": "FlashAfrique",
-  "description": "FlashAfrique - Votre source d'information sur l'actualité africaine. Politique, économie, culture, sport et plus encore.",
+  "id": "/",
   "start_url": "/",
+  "scope": "/",
+  "lang": "fr-FR",
   "display": "standalone",
+  "orientation": "portrait-primary",
   "background_color": "#ffffff",
   "theme_color": "#1a1a1a",
-  "orientation": "portrait-primary",
+  "description": "FlashAfrique - Votre source d'information sur l'actualité africaine. Politique, économie, culture, sport et plus encore.",
+  "categories": ["news", "magazines"],
   "icons": [
     {
       "src": "/favicon.ico",
@@ -26,35 +30,32 @@
       "purpose": "any maskable"
     }
   ],
-  "categories": ["news", "magazines"],
-  "screenshots": [
-    {
-      "src": "/screenshot-mobile.png",
-      "sizes": "540x720",
-      "type": "image/png",
-      "form_factor": "narrow"
-    },
-    {
-      "src": "/screenshot-desktop.png",
-      "sizes": "1920x1080",
-      "type": "image/png",
-      "form_factor": "wide"
-    }
-  ],
   "shortcuts": [
     {
       "name": "Derniers articles",
       "short_name": "Derniers",
       "description": "Voir les derniers articles publiés",
       "url": "/?source=pwa",
-      "icons": [{ "src": "/favicon.ico", "sizes": "48x48" }]
+      "icons": [
+        {
+          "src": "/favicon.ico",
+          "sizes": "48x48",
+          "type": "image/x-icon"
+        }
+      ]
     },
     {
       "name": "Catégories",
       "short_name": "Catégories",
       "description": "Explorer par catégorie",
       "url": "/categories?source=pwa",
-      "icons": [{ "src": "/favicon.ico", "sizes": "48x48" }]
+      "icons": [
+        {
+          "src": "/favicon.ico",
+          "sizes": "48x48",
+          "type": "image/x-icon"
+        }
+      ]
     }
   ]
 }

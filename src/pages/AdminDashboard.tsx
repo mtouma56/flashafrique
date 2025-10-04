@@ -1,11 +1,12 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, type FC } from 'react';
 import { useNavigate } from 'react-router-dom';
-import AdminSidebar from '../components/AdminSidebar';
-import AdminTopbar from '../components/AdminTopbar';
-import ArticlesTable from '../components/ArticlesTable';
-import type { Article } from '../components/ArticlesTable';
-import { supabase } from '../lib/supabaseClient';
+
+import AdminSidebar from '@/components/AdminSidebar';
+import AdminTopbar from '@/components/AdminTopbar';
+import ArticlesTable from '@/components/ArticlesTable';
+import type { Article } from '@/components/ArticlesTable';
 import { useSession } from '@/context/SessionProvider';
+import { supabase } from '@/lib/supabaseClient';
 
 type ModerationAction = 'approved' | 'rejected';
 
@@ -33,7 +34,7 @@ interface ModerationLog {
   createdAt: string;
 }
 
-const AdminDashboard: React.FC = () => {
+const AdminDashboard: FC = () => {
   const [articles, setArticles] = useState<Article[]>([]);
   const [pendingCount, setPendingCount] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(true);

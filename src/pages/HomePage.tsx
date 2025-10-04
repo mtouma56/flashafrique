@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import ArticleCard from '@/components/ArticleCard';
 import { Hero } from '@/components/Hero';
+import { SEOHead } from '@/components/SEO/SEOHead';
 import { ArticleCardSkeleton } from '@/components/ui/ArticleCardSkeleton';
 import { HeroSkeleton } from '@/components/ui/HeroSkeleton';
 import { OptimizedImage } from '@/components/ui/OptimizedImage';
@@ -62,6 +63,8 @@ const HomePage = () => {
   }, [toast]);
 
   const heroArticle = articles[0];
+  const siteUrl = (import.meta.env.VITE_SITE_URL as string | undefined)?.replace(/\/+$/, '') ?? 'https://flashafrique.vercel.app';
+  const canonicalUrl = `${siteUrl}/`;
   const heroData = heroArticle
     ? {
         title: heroArticle.title,
@@ -69,6 +72,11 @@ const HomePage = () => {
         imageUrl: heroArticle.image_url ?? '',
       }
     : null;
+  const heroImageRaw = heroData?.imageUrl?.trim();
+  const heroImage = heroImageRaw && heroImageRaw !== '' ? heroImageRaw : '/placeholder.svg';
+  const metaImage = heroImage.startsWith('http')
+    ? heroImage
+    : `${siteUrl}${heroImage.startsWith('/') ? '' : '/'}${heroImage}`;
 
   const trendingTopics = [
     "Presidential Elections",
@@ -83,7 +91,15 @@ const HomePage = () => {
 
   // Show loading skeleton only if no cached data and no network data yet
   return (
-    <main className="flex flex-1 justify-center px-10 py-8">
+    <>
+      <SEOHead
+        title="Actualités en temps réel"
+        description="Suivez l'actualité africaine en direct : politique, économie, culture, sport et analyses exclusives sélectionnées par l'équipe FlashAfrique."
+        image={metaImage}
+        canonicalUrl={canonicalUrl}
+      />
+
+      <main className="flex flex-1 justify-center px-10 py-8">
       <div className="flex w-full max-w-7xl flex-col gap-12">
         {loading && articles.length === 0 ? (
           <HeroSkeleton />
@@ -220,7 +236,8 @@ const HomePage = () => {
               </div>
             </section>
       </div>
-    </main>
+      </main>
+    </>
   );
 };
 
