@@ -1,95 +1,131 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import ArticleHero from '../components/ArticleHero';
-import ArticleMeta from '../components/ArticleMeta';
-import ShareButtons from '../components/ShareButtons';
-import { supabase } from '../lib/supabaseClient';
 
-interface Article {
-  id: string;
-  title: string;
-  summary: string;
-  image_url: string;
-  body: string;
-  category: string;
-  author: string;
-  publish_at: string;
-  created_at: string;
-}
+import ArticleHero from '@/components/ArticleHero';
+import ArticleMeta from '@/components/ArticleMeta';
+import ArticleCard from '@/components/ArticleCard';
+import ShareButtons from '@/components/ShareButtons';
+import { Skeleton } from '@/components/ui/skeleton';
+import { useToast } from '@/hooks/use-toast';
+import { fetchArticleDetail } from '@/lib/api';
+import type { Article } from '@/types/article';
 
 const ArticleDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  const { toast } = useToast();
   const [article, setArticle] = useState<Article | null>(null);
+  const [relatedArticles, setRelatedArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (id) {
-      fetchArticle(id);
+    if (!id) {
+      return;
     }
-  }, [id]);
 
-  const fetchArticle = async (articleId: string) => {
-    try {
+    const controller = new AbortController();
+    let isMounted = true;
+
+    const loadArticle = async () => {
       setLoading(true);
       setError(null);
 
-      const { data, error: fetchError } = await supabase
-        .from('articles')
-        .select('*')
-        .eq('id', articleId)
-        .single();
+      try {
+        const { article: articleData, relatedArticles: related } = await fetchArticleDetail(id, controller.signal);
 
-      console.log(fetchError);
+        if (!isMounted) {
+          return;
+        }
 
-      if (fetchError) {
-        console.error('Supabase fetch error:', fetchError);
-        throw fetchError;
+        if (!articleData) {
+          setArticle(null);
+          setError("L'article que vous recherchez n'est plus disponible.");
+          toast({
+            variant: 'destructive',
+            title: 'Article introuvable',
+            description: 'Cet article n\'est plus accessible ou a été supprimé.',
+          });
+          return;
+        }
+
+        setArticle(articleData);
+        setRelatedArticles(related);
+      } catch (err) {
+        if (err instanceof DOMException && err.name === 'AbortError') {
+          return;
+        }
+
+        console.error('Erreur lors de la récupération de l\'article:', err);
+        if (!isMounted) {
+          return;
+        }
+
+        setError("Impossible de charger l'article. Veuillez réessayer plus tard.");
+        toast({
+          variant: 'destructive',
+          title: 'Erreur de chargement',
+          description: 'La récupération de cet article a échoué. Vérifiez votre connexion et réessayez.',
+        });
+      } finally {
+        if (isMounted) {
+          setLoading(false);
+        }
       }
+    };
 
-      setArticle(data);
-    } catch (err) {
-      console.error('Erreur lors de la récupération de l\'article:', err);
-      setError('Impossible de charger l\'article. Veuillez réessayer plus tard.');
-    } finally {
-      setLoading(false);
-    }
-  };
+    void loadArticle();
+
+    return () => {
+      isMounted = false;
+      controller.abort();
+    };
+  }, [id, toast]);
 
   if (loading) {
     return (
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="mb-4 inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent"></div>
-          <p className="text-lg text-black dark:text-white">Chargement de l'article...</p>
+      <main className="container mx-auto flex-1 px-4 py-8 sm:px-6 md:py-12 lg:px-8">
+        <div className="mx-auto flex w-full max-w-4xl flex-col gap-6">
+          <Skeleton className="h-6 w-32" />
+          <Skeleton className="h-10 w-3/4" />
+          <Skeleton className="h-4 w-5/6" />
+          <div className="overflow-hidden rounded-xl">
+            <Skeleton className="aspect-[16/9] w-full" />
+          </div>
+          <div className="space-y-4">
+            <Skeleton className="h-4 w-full" />
+            <Skeleton className="h-4 w-11/12" />
+            <Skeleton className="h-4 w-10/12" />
+          </div>
         </div>
-      </div>
+      </main>
     );
   }
 
   if (error || !article) {
     return (
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl font-bold mb-4">Article non trouvé</h1>
-          <p className="text-subtle-light dark:text-subtle-dark mb-4">
+      <main className="container mx-auto flex-1 px-4 py-8 sm:px-6 md:py-12 lg:px-8">
+        <div className="mx-auto max-w-3xl text-center">
+          <h1 className="mb-4 text-4xl font-bold">Article non trouvé</h1>
+          <p className="mb-6 text-subtle-light dark:text-subtle-dark">
             {error || "L'article que vous recherchez n'existe pas ou a été supprimé."}
           </p>
-          {error && (
-            <button
-              onClick={() => id && fetchArticle(id)}
-              className="rounded-lg bg-primary px-6 py-2 text-white hover:bg-primary/90"
-            >
-              Réessayer
-            </button>
-          )}
+          <button
+            onClick={() => window.history.back()}
+            className="rounded-lg bg-primary px-6 py-2 text-white hover:bg-primary/90"
+          >
+            Retour
+          </button>
         </div>
-      </div>
+      </main>
     );
   }
 
-  const formatDate = (dateString: string) => {
+  const formatDate = (dateString: string | null | undefined) => {
+    if (!dateString) {
+      return '';
+    }
+
     const date = new Date(dateString);
     return date.toLocaleDateString('fr-FR', {
       year: 'numeric',
@@ -98,25 +134,29 @@ const ArticleDetailPage: React.FC = () => {
     });
   };
 
+  const summary = article.summary ?? '';
+  const heroImage = article.image_url ?? '/placeholder.svg';
+  const categories = article.category ? [article.category] : [];
+
   return (
     <>
       <Helmet>
         <title>{article.title} - FlashAfrique</title>
-        <meta name="description" content={article.summary} />
+        <meta name="description" content={summary} />
         <meta property="og:title" content={article.title} />
-        <meta property="og:description" content={article.summary} />
-        <meta property="og:image" content={article.image_url} />
+        <meta property="og:description" content={summary} />
+        <meta property="og:image" content={heroImage} />
         <meta property="og:type" content="article" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={article.title} />
-        <meta name="twitter:description" content={article.summary} />
-        <meta name="twitter:image" content={article.image_url} />
+        <meta name="twitter:description" content={summary} />
+        <meta name="twitter:image" content={heroImage} />
       </Helmet>
 
-      <main className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
-          <div className="max-w-4xl mx-auto">
+      <main className="container mx-auto flex-grow px-4 py-8 sm:px-6 md:py-12 lg:px-8">
+          <div className="mx-auto max-w-4xl">
             <ArticleMeta
-              categories={[article.category]}
+              categories={categories}
               author={article.author || 'FlashAfrique'}
               publishedAt={formatDate(article.publish_at)}
             />
@@ -125,14 +165,14 @@ const ArticleDetailPage: React.FC = () => {
               {article.title}
             </h1>
 
-            <ArticleHero imageUrl={article.image_url} alt={article.title} />
+            <ArticleHero imageUrl={heroImage} alt={article.title ?? 'Article'} />
 
             <div className="prose prose-lg dark:prose-invert max-w-none prose-p:text-text-light dark:prose-p:text-text-dark prose-headings:text-text-light dark:prose-headings:text-text-dark prose-p:leading-relaxed prose-p:text-lg my-8">
               <p className="text-xl font-medium text-text-light dark:text-text-dark mb-6">
-                {article.summary}
+                {summary}
               </p>
               <div className="whitespace-pre-wrap">
-                {article.body}
+                {article.body ?? ''}
               </div>
             </div>
 
@@ -141,6 +181,23 @@ const ArticleDetailPage: React.FC = () => {
               comments={0}
               bookmarks={0}
             />
+
+            {relatedArticles.length > 0 && (
+              <section className="mt-12">
+                <h2 className="mb-6 text-2xl font-bold text-black dark:text-white">Articles similaires</h2>
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                  {relatedArticles.map((related) => (
+                    <ArticleCard
+                      key={related.id}
+                      id={related.id}
+                      title={related.title}
+                      description={related.summary ?? ''}
+                      imageUrl={related.image_url ?? ''}
+                    />
+                  ))}
+                </div>
+              </section>
+            )}
           </div>
       </main>
     </>

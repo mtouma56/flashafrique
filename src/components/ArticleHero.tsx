@@ -1,21 +1,23 @@
 import React from 'react';
 
+import { OptimizedImage } from '@/components/ui/OptimizedImage';
+
 interface ArticleHeroProps {
   imageUrl: string;
   alt: string;
 }
 
 const ArticleHero: React.FC<ArticleHeroProps> = ({ imageUrl, alt }) => {
+  const safeImageUrl = imageUrl || '/placeholder.svg';
+
   return (
-    <div className="mb-8 rounded-xl overflow-hidden">
-      <div className="w-full aspect-[16/9] relative">
-        <img
-          src={imageUrl}
+    <div className="mb-8 overflow-hidden rounded-xl">
+      <div className="relative aspect-[16/9] w-full">
+        <OptimizedImage
+          src={safeImageUrl}
           alt={alt}
-          loading="eager"
-          decoding="async"
-          fetchPriority="high"
-          className="w-full h-full object-cover"
+          className="h-full w-full object-cover"
+          priority
         />
       </div>
     </div>

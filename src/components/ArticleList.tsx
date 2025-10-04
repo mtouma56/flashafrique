@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import type { Article } from '../pages/CategoryPage';
+
+import { OptimizedImage } from '@/components/ui/OptimizedImage';
+import type { Article } from '@/types/article';
 
 interface ArticleListProps {
   articles: Article[];
@@ -17,7 +19,11 @@ const ArticleList: React.FC<ArticleListProps> = ({ articles }) => {
     );
   }
 
-  const formatDate = (dateString: string): string => {
+  const formatDate = (dateString: string | null | undefined): string => {
+    if (!dateString) {
+      return '';
+    }
+
     const date = new Date(dateString);
     return date.toLocaleDateString('fr-FR', {
       year: 'numeric',
@@ -33,7 +39,7 @@ const ArticleList: React.FC<ArticleListProps> = ({ articles }) => {
           <article className="group grid md:grid-cols-3 gap-6 items-center">
             <div className="md:col-span-2">
               <div className="flex flex-col gap-3">
-                <Link to={`/article/${article.id}`}>
+                <Link to={`/articles/${article.id}`}>
                   <h3 className="text-xl font-bold text-neutral-900 dark:text-white group-hover:text-primary transition-colors">
                     {article.title}
                   </h3>
@@ -46,21 +52,12 @@ const ArticleList: React.FC<ArticleListProps> = ({ articles }) => {
                 </p>
               </div>
             </div>
-            <Link to={`/article/${article.id}`} className="w-full overflow-hidden rounded-lg">
-              <div
-                className="w-full bg-center bg-no-repeat aspect-video bg-cover transition-transform duration-300 group-hover:scale-105"
-                style={{ backgroundImage: `url("${article.image_url}")` }}
-                role="img"
-                aria-label={article.title}
-              >
-                <img
-                  src={article.image_url}
-                  alt={article.title}
-                  loading="lazy"
-                  decoding="async"
-                  className="w-full h-full object-cover opacity-0"
-                />
-              </div>
+            <Link to={`/articles/${article.id}`} className="w-full overflow-hidden rounded-lg">
+              <OptimizedImage
+                src={article.image_url || '/placeholder.svg'}
+                alt={article.title ?? 'Article'}
+                className="aspect-video w-full rounded-lg object-cover transition-transform duration-300 group-hover:scale-105"
+              />
             </Link>
           </article>
           {index < articles.length - 1 && (

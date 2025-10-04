@@ -1,24 +1,14 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { supabase } from '../lib/supabaseClient';
-import CategoryHeader from '../components/CategoryHeader';
-import FilterBar from '../components/FilterBar';
-import ArticleList from '../components/ArticleList';
-import Pagination from '../components/Pagination';
 
-// Types
-export interface Article {
-  id: number;
-  title: string;
-  summary: string;
-  image_url: string;
-  category: string;
-  country: string;
-  source: string;
-  publish_at: string;
-  status?: string;
-  created_at?: string;
-}
+import ArticleList from '@/components/ArticleList';
+import CategoryHeader from '@/components/CategoryHeader';
+import FilterBar from '@/components/FilterBar';
+import Pagination from '@/components/Pagination';
+import { CategorySkeleton } from '@/components/ui/CategorySkeleton';
+import { useToast } from '@/hooks/use-toast';
+import { fetchCategoryArticles } from '@/lib/api';
+import type { Article } from '@/types/article';
 
 
 // Fonction pour mapper le slug de la route vers la catégorie DB (FR)
@@ -50,6 +40,7 @@ const formatCategoryName = (slug: string): string => {
 
 const CategoryPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
+  const { toast } = useToast();
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -63,52 +54,77 @@ const CategoryPage: React.FC = () => {
 
   const categoryName = formatCategoryName(slug || 'all');
 
-  // Fetch articles from Supabase on mount and when slug changes
   useEffect(() => {
-    const fetchArticles = async () => {
-      if (!slug) return;
-      
+    setCurrentPage(1);
+  }, [searchQuery, selectedCountry, selectedSource, selectedDate]);
+
+  useEffect(() => {
+    if (!slug) {
+      return;
+    }
+
+    const controller = new AbortController();
+    let isMounted = true;
+
+    const loadArticles = async () => {
       setLoading(true);
       setError(null);
-      
+
       try {
         const dbCategory = mapSlug(slug);
-        console.log('CategoryPage fetch → slug:', slug, '→ dbCategory:', dbCategory);
+        const { articles: categoryArticles, count } = await fetchCategoryArticles(dbCategory, controller.signal);
 
-        const { data, error: fetchError, count } = await supabase
-          .from('articles')
-          .select('*', { count: 'exact' })
-          .eq('category', dbCategory)
-          .eq('status', 'approved')
-          .lte('publish_at', new Date().toISOString())
-          .order('publish_at', { ascending: false })
-          .range((currentPage - 1) * pageSize, currentPage * pageSize - 1);
+        if (!isMounted) {
+          return;
+        }
 
-        if (fetchError) throw fetchError;
-        
-        setArticles(data || []);
-        setTotalCount(count || 0);
+        setArticles(categoryArticles);
+        setTotalCount(count);
+        setCurrentPage(1);
       } catch (err) {
-        console.error('Error fetching articles:', err);
-        setError(err instanceof Error ? err.message : 'Une erreur est survenue lors du chargement des articles');
+        if (err instanceof DOMException && err.name === 'AbortError') {
+          return;
+        }
+
+        console.error('Error fetching category articles:', err);
+        if (!isMounted) {
+          return;
+        }
+
+        setError('Impossible de charger les articles de cette catégorie.');
+        toast({
+          variant: 'destructive',
+          title: 'Erreur de chargement',
+          description: 'La récupération des articles a échoué. Veuillez vérifier votre connexion ou réessayer plus tard.',
+        });
       } finally {
-        setLoading(false);
+        if (isMounted) {
+          setLoading(false);
+        }
       }
     };
 
-    fetchArticles();
-  }, [slug, currentPage, pageSize]);
+    void loadArticles();
+
+    return () => {
+      isMounted = false;
+      controller.abort();
+    };
+  }, [slug, toast]);
 
   // Filtrage des articles côté client
   const filteredArticles = useMemo(() => {
     return articles.filter(article => {
-      const matchesSearch = !searchQuery || 
-        article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        article.summary.toLowerCase().includes(searchQuery.toLowerCase());
+      const title = (article.title ?? '').toLowerCase();
+      const summary = (article.summary ?? '').toLowerCase();
+      const matchesSearch =
+        !searchQuery ||
+        title.includes(searchQuery.toLowerCase()) ||
+        summary.includes(searchQuery.toLowerCase());
       const matchesCountry = !selectedCountry || article.country === selectedCountry;
       const matchesSource = !selectedSource || article.source === selectedSource;
-      const matchesDate = !selectedDate || article.publish_at.startsWith(selectedDate);
-      
+      const matchesDate = !selectedDate || (article.publish_at ?? '').startsWith(selectedDate);
+
       return matchesSearch && matchesCountry && matchesSource && matchesDate;
     });
   }, [articles, searchQuery, selectedCountry, selectedSource, selectedDate]);
@@ -164,12 +180,7 @@ const CategoryPage: React.FC = () => {
               />
 
               {loading ? (
-                <div className="flex items-center justify-center py-12">
-                  <div className="flex flex-col items-center gap-4">
-                    <div className="h-12 w-12 animate-spin rounded-full border-4 border-gray-300 border-t-red-600 dark:border-gray-700 dark:border-t-red-500"></div>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Chargement des articles...</p>
-                  </div>
-                </div>
+                <CategorySkeleton />
               ) : error ? (
                 <div className="rounded-lg border border-red-200 bg-red-50 p-6 dark:border-red-900 dark:bg-red-950">
                   <div className="flex items-start gap-3">
