@@ -1,6 +1,13 @@
 import * as Sentry from '@sentry/react';
 
-export const initSentry = () => {
+export const initSentry = (dsn: string) => {
+  const trimmedDsn = dsn.trim();
+
+  if (!trimmedDsn) {
+    console.warn('Sentry DSN is empty. Skipping initialization.');
+    return;
+  }
+
   // Only initialize in production
   if (import.meta.env.MODE !== 'production') {
     console.log('Sentry disabled in development mode');
@@ -8,7 +15,7 @@ export const initSentry = () => {
   }
 
   Sentry.init({
-    dsn: import.meta.env.VITE_SENTRY_DSN || '',
+    dsn: trimmedDsn,
     environment: import.meta.env.MODE,
     
     // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring

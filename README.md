@@ -77,6 +77,18 @@ Une migration de sécurité a été créée pour corriger les RLS policies :
 | Score Performance | 65/100 | 75/100 | 90/100 |
 | Score Global | 61/100 | 75/100 | 90/100 |
 
+## 📡 Activer l'analytics & le monitoring
+
+Pour activer Google Analytics 4 et Sentry sur Vercel :
+
+1. Ouvrez votre projet sur [Vercel](https://vercel.com) puis allez dans **Settings → Environment Variables**.
+2. Ajoutez les variables suivantes dans les environnements **Production** (et **Preview** si besoin) :
+   - `VITE_GA_MEASUREMENT_ID` → votre identifiant GA4 (`G-XXXXXXXXXX`).
+   - `VITE_SENTRY_DSN` → l'URL DSN fournie par Sentry.
+3. Déployez à nouveau l'application pour que ces valeurs soient prises en compte.
+
+> Sans ces variables, Google Analytics et Sentry restent désactivés automatiquement.
+
 ## 🔜 Prochaines Étapes (Phase 2)
 
 ### Priorité Haute
