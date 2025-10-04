@@ -1,16 +1,16 @@
 import { lazy, Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
-import Layout from './components/Layout';
-import HomePage from './pages/HomePage';
-import ArticleDetailPage from './pages/ArticleDetailPage';
-import AuthCallback from './pages/AuthCallback';
-import NotFoundPage from './pages/NotFoundPage';
-import ProtectedAdminRoute from './components/ProtectedAdminRoute';
+import Layout from '@/components/Layout';
+import HomePage from '@/pages/HomePage';
+import ArticleDetailPage from '@/pages/ArticleDetailPage';
+import AuthCallback from '@/pages/AuthCallback';
+import AuditReport from '@/pages/AuditReport';
+import NotFoundPage from '@/pages/NotFoundPage';
+import ProtectedAdminRoute from '@/components/ProtectedAdminRoute';
 
-// Lazy-loaded routes
-const CategoryPage = lazy(() => import('./pages/CategoryPage'));
-const SearchPage = lazy(() => import('./pages/SearchPage').then(m => ({ default: m.SearchPage })));
-const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
+const CategoryPage = lazy(() => import('@/pages/CategoryPage'));
+const SearchPage = lazy(() => import('@/pages/SearchPage').then((m) => ({ default: m.SearchPage })));
+const AdminDashboard = lazy(() => import('@/pages/AdminDashboard'));
 
 const LoadingFallback = () => (
   <div className="flex flex-1 items-center justify-center p-8">
@@ -26,6 +26,10 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <HomePage />,
+      },
+      {
+        path: 'audit',
+        element: <AuditReport />,
       },
       {
         path: 'articles/:id',
@@ -66,5 +70,9 @@ export const router = createBrowserRouter([
         element: <NotFoundPage />,
       },
     ],
+  },
+  {
+    path: '*',
+    element: <NotFoundPage />,
   },
 ]);

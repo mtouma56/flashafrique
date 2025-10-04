@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react';
-import { useSession } from '../../context/SessionProvider';
+import { useSession } from '@/context/SessionProvider';
 
 type AuthTab = 'signin' | 'signup' | 'forgot';
 
