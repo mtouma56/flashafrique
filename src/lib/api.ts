@@ -62,6 +62,8 @@ const mapArticle = (article: Article): Article => ({
   publish_at: article.publish_at ?? '',
   country: article.country ?? '',
   source: article.source ?? '',
+  created_at: article.created_at ?? null,
+  updated_at: article.updated_at ?? article.publish_at ?? article.created_at ?? null,
 });
 
 export const fetchHomeArticles = async (signal?: AbortSignal): Promise<Article[]> => {

@@ -11,6 +11,7 @@ export interface Article {
   country?: string | null;
   source?: string | null;
   created_at?: string | null;
+  updated_at?: string | null;
 }
 
 export interface CachedCategoryResponse {

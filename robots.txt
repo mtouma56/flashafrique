@@ -1,26 +1,5 @@
-# FlashAfrique - Robots.txt optimisé
+# FlashAfrique - Robots.txt
 User-agent: *
 Allow: /
 Disallow: /admin
-Disallow: /api/
-Disallow: /auth
-
-# Crawl delay pour éviter surcharge serveur
-Crawl-delay: 1
-
-# Sitemap (à générer dynamiquement)
 Sitemap: https://flashafrique.vercel.app/sitemap.xml
-
-# Agents spécifiques
-User-agent: Googlebot
-Allow: /
-Crawl-delay: 0
-
-User-agent: Bingbot
-Allow: /
-
-User-agent: Twitterbot
-Allow: /
-
-User-agent: facebookexternalhit
-Allow: /
