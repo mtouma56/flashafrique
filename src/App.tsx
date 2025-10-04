@@ -47,7 +47,6 @@ const App = () => {
       <HelmetProvider>
         <TooltipProvider>
           <Toaster />
-          <Sonner />
           <BrowserRouter>
             <ScrollToTop />
             <Routes>
