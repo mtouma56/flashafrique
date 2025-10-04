@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import { OptimizedImage } from '@/components/ui/OptimizedImage';
+
 export interface SearchResult {
   id: string;
   title: string;
@@ -15,14 +17,14 @@ interface SearchResultCardProps {
 }
 
 export const SearchResultCard: React.FC<SearchResultCardProps> = ({ result }) => {
+  const imageUrl = result.imageUrl || '/placeholder.svg';
+
   return (
-    <article className="flex flex-col sm:flex-row gap-6 group">
+    <article className="flex flex-col gap-6 sm:flex-row group">
       <div className="sm:w-1/3">
-        <img
-          src={result.imageUrl}
+        <OptimizedImage
+          src={imageUrl}
           alt={result.title}
-          loading="lazy"
-          decoding="async"
           className="aspect-video w-full rounded-lg object-cover"
         />
       </div>

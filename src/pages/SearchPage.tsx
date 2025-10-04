@@ -1,18 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { SearchResultCard } from '../components/SearchResultCard';
-import type { SearchResult } from '../components/SearchResultCard';
-import { PaginationNav } from '../components/PaginationNav';
-import { supabase } from '../lib/supabaseClient';
 
-interface Article {
-  id: string;
-  title: string;
-  summary: string;
-  image_url: string;
-  category: string;
-  publish_at: string;
-}
+import { PaginationNav } from '@/components/PaginationNav';
+import { SearchResultCard } from '@/components/SearchResultCard';
+import type { SearchResult } from '@/components/SearchResultCard';
+import { SearchSkeleton } from '@/components/ui/SearchSkeleton';
+import { useToast } from '@/hooks/use-toast';
+import { fetchSearchResults } from '@/lib/api';
 
 export const SearchPage: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -21,8 +15,9 @@ export const SearchPage: React.FC = () => {
   const [sortBy, setSortBy] = useState('relevance');
   const [dateFilter, setDateFilter] = useState('all');
   const [categoryFilter, setCategoryFilter] = useState('all');
-  
-  const [results, setResults] = useState<SearchResult[]>([]);
+
+  const { toast } = useToast();
+  const [allResults, setAllResults] = useState<SearchResult[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [totalResults, setTotalResults] = useState(0);
@@ -31,62 +26,80 @@ export const SearchPage: React.FC = () => {
   const pageSize = 10;
 
   useEffect(() => {
-    const fetchResults = async () => {
-      if (!query.trim()) {
-        setResults([]);
-        setTotalResults(0);
-        setTotalPages(0);
-        return;
-      }
+    if (!query.trim()) {
+      setAllResults([]);
+      setTotalResults(0);
+      setTotalPages(0);
+      setError(null);
+      return;
+    }
 
+    const controller = new AbortController();
+    let isMounted = true;
+
+    const loadResults = async () => {
       setLoading(true);
       setError(null);
 
       try {
-        const { data, error: fetchError, count } = await supabase
-          .from('articles')
-          .select('*', { count: 'exact' })
-          .or(`title.ilike.%${query}%,summary.ilike.%${query}%`)
-          .eq('status', 'approved')
-          .lte('publish_at', new Date().toISOString())
-          .order('publish_at', { ascending: false })
-          .range((currentPage - 1) * pageSize, currentPage * pageSize - 1);
+        const { articles } = await fetchSearchResults(query, controller.signal);
 
-        console.log({
-          q: query,
-          count,
-          dataLen: data?.length,
-          error: fetchError
-        });
+        if (!isMounted) {
+          return;
+        }
 
-        if (fetchError) throw fetchError;
-
-        const formattedResults: SearchResult[] = (data || []).map((article: Article) => ({
+        const formattedResults: SearchResult[] = articles.map(article => ({
           id: article.id,
           title: article.title,
-          summary: article.summary,
-          imageUrl: article.image_url,
-          category: article.category,
-          date: new Date(article.publish_at).toISOString().split('T')[0]
+          summary: article.summary ?? '',
+          imageUrl: article.image_url ?? '',
+          category: article.category ?? '',
+          date: article.publish_at ? new Date(article.publish_at).toISOString().split('T')[0] : '',
         }));
 
-        setResults(formattedResults);
-        setTotalResults(count || 0);
-        setTotalPages(Math.ceil((count || 0) / pageSize));
+        setAllResults(formattedResults);
+        const availableCount = formattedResults.length;
+        setTotalResults(availableCount);
+        setTotalPages(availableCount > 0 ? Math.ceil(availableCount / pageSize) : 0);
       } catch (err) {
+        if (err instanceof DOMException && err.name === 'AbortError') {
+          return;
+        }
+
         console.error('Erreur lors de la récupération des résultats:', err);
+        if (!isMounted) {
+          return;
+        }
+
         setError('Une erreur est survenue lors de la recherche. Veuillez réessayer.');
-        setResults([]);
+        setAllResults([]);
         setTotalResults(0);
         setTotalPages(0);
+        toast({
+          variant: 'destructive',
+          title: 'Erreur de recherche',
+          description: 'Impossible de récupérer les résultats. Vérifiez votre connexion et réessayez.',
+        });
       } finally {
-        setLoading(false);
+        if (isMounted) {
+          setLoading(false);
+        }
       }
     };
 
-    fetchResults();
+    void loadResults();
     window.scrollTo(0, 0);
-  }, [query, currentPage]);
+
+    return () => {
+      isMounted = false;
+      controller.abort();
+    };
+  }, [query, toast]);
+
+  const paginatedResults = useMemo(() => {
+    const startIndex = (currentPage - 1) * pageSize;
+    return allResults.slice(startIndex, startIndex + pageSize);
+  }, [allResults, currentPage, pageSize]);
 
   return (
     <main className="container mx-auto flex-1 px-4 sm:px-6 lg:px-8 py-8">
@@ -211,29 +224,10 @@ export const SearchPage: React.FC = () => {
           )}
 
           {/* Loading State */}
-          {loading && (
-            <div className="space-y-8">
-              {[...Array(3)].map((_, index) => (
-                <div key={index} className="animate-pulse">
-                  <div className="flex gap-4">
-                    <div className="h-32 w-48 bg-gray-200 dark:bg-gray-700 rounded-lg flex-shrink-0"></div>
-                    <div className="flex-1 space-y-3">
-                      <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
-                      <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full"></div>
-                      <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-5/6"></div>
-                      <div className="flex gap-2">
-                        <div className="h-4 w-20 bg-gray-200 dark:bg-gray-700 rounded"></div>
-                        <div className="h-4 w-24 bg-gray-200 dark:bg-gray-700 rounded"></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
+          {loading && <SearchSkeleton />}
 
           {/* Empty State */}
-          {!loading && !error && query.trim() && results.length === 0 && (
+          {!loading && !error && query.trim() && allResults.length === 0 && (
             <div className="text-center py-12">
               <svg
                 className="mx-auto h-12 w-12 text-gray-400"
@@ -259,13 +253,13 @@ export const SearchPage: React.FC = () => {
           )}
 
           {/* Results Section */}
-          {!loading && !error && results.length > 0 && (
+          {!loading && !error && paginatedResults.length > 0 && (
             <>
               <div className="space-y-8">
-                {results.map((result, index) => (
+                {paginatedResults.map((result, index) => (
                   <React.Fragment key={result.id}>
                     <SearchResultCard result={result} />
-                    {index < results.length - 1 && (
+                    {index < paginatedResults.length - 1 && (
                       <hr className="border-gray-200 dark:border-gray-800" />
                     )}
                   </React.Fragment>
