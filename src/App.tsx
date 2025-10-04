@@ -1,26 +1,67 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { HelmetProvider } from 'react-helmet-async';
-import HomePage from './pages/HomePage';
-import ArticleDetailPage from './pages/ArticleDetailPage';
-import CategoryPage from './pages/CategoryPage';
-import { SearchPage } from './pages/SearchPage';
-import AdminDashboard from './pages/AdminDashboard';
-import './styles/globals.css';
+import { Toaster } from "@/components/ui/toaster";
+import { Toaster as Sonner } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
+import { useEffect } from "react";
+import Index from "./pages/Index";
+import AuditReport from "./pages/AuditReport";
+import NotFound from "./pages/NotFound";
+import { ScrollToTop } from "./components/UI/ScrollToTop";
+import { initSentry } from "./lib/sentry";
+import { initGA, trackPageView } from "./lib/analytics";
 
-function App() {
-  return (
-    <HelmetProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/articles/:id" element={<ArticleDetailPage />} />
-          <Route path="/category/:slug" element={<CategoryPage />} />
-          <Route path="/search" element={<SearchPage />} />
-          <Route path="/admin" element={<AdminDashboard />} />
-        </Routes>
-      </BrowserRouter>
-    </HelmetProvider>
-  );
+const queryClient = new QueryClient();
+
+// Initialize monitoring and analytics
+initSentry();
+if (import.meta.env.MODE === 'production') {
+  // Replace with your actual GA4 Measurement ID
+  initGA('G-XXXXXXXXXX');
 }
+
+const App = () => {
+  useEffect(() => {
+    // Track page views on route change
+    if (import.meta.env.MODE === 'production') {
+      trackPageView(window.location.href, document.title);
+    }
+
+    // Register service worker for PWA
+    if ('serviceWorker' in navigator && import.meta.env.MODE === 'production') {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker
+          .register('/service-worker.js')
+          .then((registration) => {
+            console.log('SW registered:', registration);
+          })
+          .catch((error) => {
+            console.log('SW registration failed:', error);
+          });
+      });
+    }
+  }, []);
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <HelmetProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <ScrollToTop />
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/audit" element={<AuditReport />} />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
+      </HelmetProvider>
+    </QueryClientProvider>
+  );
+};
 
 export default App;
