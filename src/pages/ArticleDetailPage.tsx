@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 
 import ArticleHero from '@/components/ArticleHero';
 import ArticleMeta from '@/components/ArticleMeta';
 import ArticleCard from '@/components/ArticleCard';
 import ShareButtons from '@/components/ShareButtons';
+import { ArticleStructuredData } from '@/components/SEO/ArticleStructuredData';
+import { SEOHead } from '@/components/SEO/SEOHead';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useToast } from '@/hooks/use-toast';
 import { fetchArticleDetail } from '@/lib/api';
@@ -136,7 +137,7 @@ const ArticleDetailPage: React.FC = () => {
   };
 
   const summary = article.summary ?? '';
-  const siteUrl = import.meta.env.VITE_SITE_URL ?? 'https://flashafrique.vercel.app';
+  const siteUrl = (import.meta.env.VITE_SITE_URL as string | undefined)?.replace(/\/+$/, '') ?? 'https://flashafrique.vercel.app';
   const heroImage = article.image_url && article.image_url.trim() !== '' ? article.image_url : '/placeholder.svg';
   const heroImageUrl = heroImage.startsWith('http')
     ? heroImage
@@ -160,29 +161,6 @@ const ArticleDetailPage: React.FC = () => {
   const nowIso = new Date().toISOString();
   const isoPublishedAt = toIsoString(article.publish_at ?? article.created_at ?? null) ?? nowIso;
   const isoUpdatedAt = toIsoString(article.updated_at ?? article.publish_at ?? article.created_at ?? null) ?? isoPublishedAt;
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'NewsArticle',
-    mainEntityOfPage: canonicalUrl,
-    headline: article.title,
-    description: metaDescription,
-    image: [heroImageUrl],
-    datePublished: isoPublishedAt,
-    dateModified: isoUpdatedAt,
-    author: {
-      '@type': 'Person',
-      name: article.author || 'FlashAfrique',
-    },
-    publisher: {
-      '@type': 'Organization',
-      name: 'FlashAfrique',
-      logo: {
-        '@type': 'ImageObject',
-        url: `${siteUrl}/icon-512.png`,
-      },
-    },
-  };
-  const pageTitle = `${article.title} - FlashAfrique`;
   const categories = article.category ? [article.category] : [];
 
   useEffect(() => {
@@ -197,26 +175,27 @@ const ArticleDetailPage: React.FC = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{pageTitle}</title>
-        <link rel="canonical" href={canonicalUrl} />
-        <meta name="description" content={metaDescription} />
-        <meta name="robots" content="index, follow" />
-        <meta property="og:title" content={article.title} />
-        <meta property="og:description" content={metaDescription} />
-        <meta property="og:image" content={heroImageUrl} />
-        <meta property="og:type" content="article" />
-        <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:site_name" content="FlashAfrique" />
-        <meta property="article:published_time" content={isoPublishedAt} />
-        <meta property="article:modified_time" content={isoUpdatedAt} />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={article.title} />
-        <meta name="twitter:description" content={metaDescription} />
-        <meta name="twitter:image" content={heroImageUrl} />
-        <meta name="twitter:image:alt" content={article.title ?? 'FlashAfrique'} />
-        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
-      </Helmet>
+      <SEOHead
+        title={article.title ?? 'Article'}
+        description={metaDescription}
+        image={heroImageUrl}
+        type="article"
+        publishedTime={isoPublishedAt}
+        modifiedTime={isoUpdatedAt}
+        author={article.author || 'FlashAfrique'}
+        tags={categories}
+        canonicalUrl={canonicalUrl}
+      />
+      <ArticleStructuredData
+        title={article.title ?? 'Article'}
+        description={metaDescription}
+        image={heroImageUrl}
+        publishedTime={isoPublishedAt}
+        modifiedTime={isoUpdatedAt}
+        author={article.author || 'FlashAfrique'}
+        category={categories[0] ?? 'Actualités'}
+        url={canonicalUrl}
+      />
 
       <main className="container mx-auto flex-grow px-4 py-8 sm:px-6 md:py-12 lg:px-8">
           <div className="mx-auto max-w-4xl">

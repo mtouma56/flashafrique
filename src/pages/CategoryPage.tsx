@@ -5,6 +5,7 @@ import ArticleList from '@/components/ArticleList';
 import CategoryHeader from '@/components/CategoryHeader';
 import FilterBar from '@/components/FilterBar';
 import Pagination from '@/components/Pagination';
+import { SEOHead } from '@/components/SEO/SEOHead';
 import { CategorySkeleton } from '@/components/ui/CategorySkeleton';
 import { useToast } from '@/hooks/use-toast';
 import { fetchCategoryArticles } from '@/lib/api';
@@ -53,6 +54,8 @@ const CategoryPage: React.FC = () => {
   const [totalCount, setTotalCount] = useState(0);
 
   const categoryName = formatCategoryName(slug || 'all');
+  const siteUrl = (import.meta.env.VITE_SITE_URL as string | undefined)?.replace(/\/+$/, '') ?? 'https://flashafrique.vercel.app';
+  const canonicalUrl = slug ? `${siteUrl}/category/${slug}` : `${siteUrl}/category`;
 
   useEffect(() => {
     setCurrentPage(1);
@@ -156,8 +159,22 @@ const CategoryPage: React.FC = () => {
     setCurrentPage(1);
   };
 
+  const heroImageRaw = articles[0]?.image_url?.trim();
+  const heroImage = heroImageRaw && heroImageRaw !== '' ? heroImageRaw : '/placeholder.svg';
+  const metaImage = heroImage.startsWith('http')
+    ? heroImage
+    : `${siteUrl}${heroImage.startsWith('/') ? '' : '/'}${heroImage}`;
+
   return (
-    <main className="w-full flex-1">
+    <>
+      <SEOHead
+        title={`Catégorie ${categoryName}`}
+        description={`Découvrez les dernières actualités ${categoryName.toLowerCase()} sélectionnées par la rédaction de FlashAfrique.`}
+        image={metaImage}
+        canonicalUrl={canonicalUrl}
+      />
+
+      <main className="w-full flex-1">
           <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
             <div className="flex flex-col gap-8">
               <CategoryHeader 
@@ -228,7 +245,8 @@ const CategoryPage: React.FC = () => {
               )}
             </div>
           </div>
-    </main>
+      </main>
+    </>
   );
 };
 

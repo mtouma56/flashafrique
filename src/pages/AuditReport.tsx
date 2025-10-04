@@ -93,11 +93,14 @@ const AuditReport = () => {
     return "text-red-600 border-red-600";
   };
 
+  const siteUrl = (import.meta.env.VITE_SITE_URL as string | undefined)?.replace(/\/+$/, '') ?? 'https://flashafrique.vercel.app';
+
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Rapport d'Audit Technique"
         description="Audit complet de FlashAfrique : architecture, performance, sécurité, SEO et UX"
+        canonicalUrl={`${siteUrl}/audit`}
       />
 
       <div className="container mx-auto px-4 py-8 max-w-6xl">

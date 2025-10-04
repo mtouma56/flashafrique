@@ -4,6 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 import { PaginationNav } from '@/components/PaginationNav';
 import { SearchResultCard } from '@/components/SearchResultCard';
 import type { SearchResult } from '@/components/SearchResultCard';
+import { SEOHead } from '@/components/SEO/SEOHead';
 import { SearchSkeleton } from '@/components/ui/SearchSkeleton';
 import { useToast } from '@/hooks/use-toast';
 import { fetchSearchResults } from '@/lib/api';
@@ -101,8 +102,30 @@ export const SearchPage: React.FC = () => {
     return allResults.slice(startIndex, startIndex + pageSize);
   }, [allResults, currentPage, pageSize]);
 
+  const siteUrl = (import.meta.env.VITE_SITE_URL as string | undefined)?.replace(/\/+$/, '') ?? 'https://flashafrique.vercel.app';
+  const canonicalUrl = query.trim()
+    ? `${siteUrl}/search?q=${encodeURIComponent(query.trim())}`
+    : `${siteUrl}/search`;
+  const previewImageRaw = paginatedResults[0]?.imageUrl?.trim();
+  const previewImage = previewImageRaw && previewImageRaw !== '' ? previewImageRaw : '/placeholder.svg';
+  const metaImage = previewImage.startsWith('http')
+    ? previewImage
+    : `${siteUrl}${previewImage.startsWith('/') ? '' : '/'}${previewImage}`;
+  const hasQuery = query.trim().length > 0;
+
   return (
-    <main className="container mx-auto flex-1 px-4 sm:px-6 lg:px-8 py-8">
+    <>
+      <SEOHead
+        title={hasQuery ? `Recherche : ${query}` : 'Recherche'}
+        description={hasQuery
+          ? `Résultats pour la recherche "${query}" sur FlashAfrique : articles, analyses et actualités en lien avec votre requête.`
+          : 'Recherchez les dernières actualités africaines sur FlashAfrique par mots-clés, catégorie ou date.'}
+        image={metaImage}
+        canonicalUrl={canonicalUrl}
+        robots={hasQuery ? 'noindex, follow' : 'noindex, nofollow'}
+      />
+
+      <main className="container mx-auto flex-1 px-4 sm:px-6 lg:px-8 py-8">
         <div className="max-w-4xl mx-auto">
           {/* Header Section */}
           <div className="mb-8">
@@ -278,5 +301,6 @@ export const SearchPage: React.FC = () => {
           )}
         </div>
       </main>
+    </>
   );
 };
