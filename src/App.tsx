@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import Index from "./pages/Index";
 import AuditReport from "./pages/AuditReport";
 import NotFound from "./pages/NotFound";
-import { ScrollToTop } from "./components/UI/ScrollToTop";
+import { ScrollToTop } from "./components/ui/ScrollToTop";
 import { initSentry } from "./lib/sentry";
 import { initGA, trackPageView } from "./lib/analytics";
 
