@@ -7,20 +7,24 @@ import { Toaster } from '@/components/ui/toaster';
 import { router } from '@/router';
 import { SessionProvider } from '@/context/SessionProvider';
 import { initSentry } from '@/lib/sentry';
-import { initGA, trackPageView } from '@/lib/analytics';
+import { initGA } from '@/lib/analytics';
 
 const queryClient = new QueryClient();
 
-initSentry();
+const isProduction = import.meta.env.MODE === 'production';
+const sentryDsn = (import.meta.env.VITE_SENTRY_DSN as string | undefined)?.trim();
+
+if (isProduction && sentryDsn) {
+  initSentry(sentryDsn);
+}
 
 const App = () => {
   useEffect(() => {
-    if (import.meta.env.MODE === 'production') {
-      const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID as string | undefined;
+    if (isProduction) {
+      const measurementId = (import.meta.env.VITE_GA_MEASUREMENT_ID as string | undefined)?.trim();
 
       if (measurementId) {
         initGA(measurementId);
-        trackPageView(window.location.href, document.title);
       }
 
       if ('serviceWorker' in navigator) {
@@ -37,7 +41,7 @@ const App = () => {
         return () => window.removeEventListener('load', registerServiceWorker);
       }
     }
-  }, []);
+  }, [isProduction]);
 
   return (
     <HelmetProvider>

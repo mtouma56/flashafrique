@@ -9,6 +9,7 @@ import ShareButtons from '@/components/ShareButtons';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useToast } from '@/hooks/use-toast';
 import { fetchArticleDetail } from '@/lib/api';
+import { trackArticleView } from '@/lib/analytics';
 import type { Article } from '@/types/article';
 
 const ArticleDetailPage: React.FC = () => {
@@ -184,6 +185,16 @@ const ArticleDetailPage: React.FC = () => {
   const pageTitle = `${article.title} - FlashAfrique`;
   const categories = article.category ? [article.category] : [];
 
+  useEffect(() => {
+    if (!article) {
+      return;
+    }
+
+    if (import.meta.env.MODE === 'production' && (import.meta.env.VITE_GA_MEASUREMENT_ID as string | undefined)?.trim()) {
+      trackArticleView(article.id, article.title, article.category ?? 'non catégorisé');
+    }
+  }, [article]);
+
   return (
     <>
       <Helmet>
@@ -231,9 +242,10 @@ const ArticleDetailPage: React.FC = () => {
             </div>
 
             <ShareButtons
-              likes={0}
-              comments={0}
-              bookmarks={0}
+              articleId={article.id}
+              title={article.title}
+              summary={summary}
+              url={canonicalUrl}
             />
 
             {relatedArticles.length > 0 && (

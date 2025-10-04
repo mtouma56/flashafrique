@@ -8,12 +8,14 @@ import { trackPageView } from '@/lib/analytics';
 
 const AnalyticsTracker = () => {
   const location = useLocation();
+  const isAnalyticsEnabled =
+    import.meta.env.MODE === 'production' && Boolean((import.meta.env.VITE_GA_MEASUREMENT_ID as string | undefined)?.trim());
 
   useEffect(() => {
-    if (import.meta.env.MODE === 'production') {
+    if (isAnalyticsEnabled) {
       trackPageView(window.location.href, document.title);
     }
-  }, [location]);
+  }, [isAnalyticsEnabled, location]);
 
   return null;
 };
