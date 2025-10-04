@@ -1,5 +1,7 @@
 # 🔍 Audit FlashAfrique - Rapport & Améliorations
 
+[![Lighthouse CI](https://github.com/flashafrique/flashafrique/actions/workflows/lighthouse.yml/badge.svg)](https://github.com/flashafrique/flashafrique/actions/workflows/lighthouse.yml)
+
 ## 📌 Vue d'ensemble
 
 Ce projet contient le **rapport d'audit complet** du site FlashAfrique ainsi que les **améliorations implémentées** suite à l'analyse technique.
