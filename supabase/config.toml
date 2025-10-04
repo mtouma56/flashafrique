@@ -1,0 +1,13 @@
+project_id = "ixsqqmqipnekmkfgicvq"
+
+[functions.sitemap]
+verify_jwt = false
+
+[functions.cache-category]
+verify_jwt = false
+
+[functions.cache-article]
+verify_jwt = false
+
+[functions.cache-search]
+verify_jwt = false
