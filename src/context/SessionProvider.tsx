@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
-import { supabase } from '../lib/supabaseClient';
 import type { Session, User } from '@supabase/supabase-js';
+import { supabase } from '@/lib/supabaseClient';
 
 interface SessionContextValue {
   session: Session | null;
@@ -39,28 +39,30 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
       .select('role')
       .eq('id', userId)
       .single();
-    
+
     setIsAdmin(profile?.role === 'admin');
   };
 
   useEffect(() => {
-    // Get initial session
+    let mounted = true;
+
     supabase.auth.getSession().then(({ data: { session } }) => {
+      if (!mounted) return;
       setSession(session);
       setUser(session?.user ?? null);
-      
+
       if (session?.user) {
         fetchUserRole(session.user.id);
       }
     });
 
-    // Listen for auth changes
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (!mounted) return;
       setSession(session);
       setUser(session?.user ?? null);
-      
+
       if (session?.user) {
         fetchUserRole(session.user.id);
       } else {
@@ -68,7 +70,10 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
       }
     });
 
-    return () => subscription.unsubscribe();
+    return () => {
+      mounted = false;
+      subscription.unsubscribe();
+    };
   }, []);
 
   const signInWithEmail = async (email: string) => {
@@ -78,7 +83,7 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
         emailRedirectTo: window.location.origin,
       },
     });
-    
+
     return { error };
   };
 
@@ -89,8 +94,7 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 
   const signIn = async (email: string, password: string) => {
     const { error } = await supabase.auth.signInWithPassword({ email, password });
-    
-    // Check for intended path after successful login
+
     if (!error) {
       const intendedPath = localStorage.getItem('intendedPath');
       if (intendedPath) {
@@ -98,7 +102,7 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
         window.location.href = intendedPath;
       }
     }
-    
+
     return { error };
   };
 
@@ -130,9 +134,5 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
     signOut,
   };
 
-  return (
-    <SessionContext.Provider value={value}>
-      {children}
-    </SessionContext.Provider>
-  );
+  return <SessionContext.Provider value={value}>{children}</SessionContext.Provider>;
 };

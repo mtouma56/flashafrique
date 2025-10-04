@@ -1,7 +1,7 @@
 import { type ReactNode, useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useSession } from '../context/SessionProvider';
-import { openAuthDialog } from './auth/AuthDialog';
+import { useSession } from '@/context/SessionProvider';
+import { openAuthDialog } from '@/components/auth/AuthDialog';
 
 interface ProtectedAdminRouteProps {
   children: ReactNode;
@@ -15,22 +15,19 @@ const ProtectedAdminRoute = ({ children }: ProtectedAdminRouteProps) => {
 
   useEffect(() => {
     if (!user) {
-      // Save intended path for redirect after login
       localStorage.setItem('intendedPath', location.pathname + location.search);
-      // Open auth dialog
       openAuthDialog('signin');
       navigate('/');
     } else if (!isAdmin && !hasShownToast) {
-      // Show toast for non-admin users
       const toast = document.createElement('div');
       toast.className = 'fixed top-4 right-4 z-50 rounded-lg bg-red-500 px-6 py-3 text-white shadow-lg';
       toast.textContent = 'Accès réservé aux administrateurs';
       document.body.appendChild(toast);
-      
+
       setTimeout(() => {
         toast.remove();
       }, 3000);
-      
+
       setHasShownToast(true);
       navigate('/');
     }

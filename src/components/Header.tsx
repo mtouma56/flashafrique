@@ -1,7 +1,7 @@
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useState, useEffect, type FormEvent } from 'react';
-import { useSession } from '../context/SessionProvider';
-import { AuthDialog, setAuthDialogOpener } from './auth/AuthDialog';
+import { useSession } from '@/context/SessionProvider';
+import { AuthDialog, setAuthDialogOpener } from '@/components/auth/AuthDialog';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -10,7 +10,6 @@ const Header = () => {
   const [authDialogTab, setAuthDialogTab] = useState<'signin' | 'signup' | 'forgot'>('signin');
   const { user, isAdmin, signOut } = useSession();
 
-  // Register the dialog opener function
   useEffect(() => {
     setAuthDialogOpener((tab = 'signin') => {
       setAuthDialogTab(tab);
@@ -32,7 +31,6 @@ const Header = () => {
 
   return (
     <>
-      {/* Brand Section */}
       <div className="w-full bg-background-light py-6 dark:bg-background-dark">
         <div className="flex flex-col items-center justify-center gap-4 text-black dark:text-white">
           <Link to="/" className="flex items-center gap-4">
@@ -47,7 +45,6 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Navigation Header */}
       <header className="sticky top-0 z-20 flex w-full items-center justify-between whitespace-nowrap border-b border-primary/20 bg-background-light px-10 py-3 dark:bg-background-dark">
         <div className="flex items-center gap-8">
           <nav className="flex items-center gap-8">
@@ -57,7 +54,9 @@ const Header = () => {
             <NavLink to="/category/sport" className={({ isActive }) => `text-sm font-medium transition-colors ${isActive ? 'text-primary' : 'text-black/60 hover:text-primary dark:text-white/60 dark:hover:text-primary'}`}>Sport</NavLink>
             <NavLink to="/category/societe" className={({ isActive }) => `text-sm font-medium transition-colors ${isActive ? 'text-primary' : 'text-black/60 hover:text-primary dark:text-white/60 dark:hover:text-primary'}`}>Société</NavLink>
             {isAdmin && (
-              <NavLink to="/admin" className={({ isActive }) => `text-sm font-medium transition-colors ${isActive ? 'text-primary' : 'text-black/60 hover:text-primary dark:text-white/60 dark:hover:text-primary'}`}>Admin</NavLink>
+              <NavLink to="/admin" className={({ isActive }) => `text-sm font-medium transition-colors ${isActive ? 'text-primary' : 'text-black/60 hover:text-primary dark:text-white/60 dark:hover:text-primary'}`}>
+                Admin
+              </NavLink>
             )}
           </nav>
         </div>
@@ -68,12 +67,12 @@ const Header = () => {
                 <path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path>
               </svg>
             </div>
-            <input 
+            <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="h-full w-full rounded-full border-none bg-black/5 px-10 text-sm text-black placeholder:text-black/40 focus:outline-none focus:ring-2 focus:ring-primary/50 dark:bg-white/5 dark:text-white dark:placeholder:text-white/40" 
-              placeholder="Rechercher" 
+              className="h-full w-full rounded-full border-none bg-black/5 px-10 text-sm text-black placeholder:text-black/40 focus:outline-none focus:ring-2 focus:ring-primary/50 dark:bg-white/5 dark:text-white dark:placeholder:text-white/40"
+              placeholder="Rechercher"
             />
           </form>
           <div className="flex items-center gap-2">
@@ -82,7 +81,7 @@ const Header = () => {
                 <span className="text-sm text-black/80 dark:text-white/80">
                   {user.email}
                 </span>
-                <button 
+                <button
                   onClick={handleLogout}
                   className="h-10 rounded-full bg-black/5 px-4 text-sm font-bold text-black/80 transition-colors hover:bg-black/10 dark:bg-white/5 dark:text-white/80 dark:hover:bg-white/10"
                 >
@@ -90,7 +89,7 @@ const Header = () => {
                 </button>
               </div>
             ) : (
-              <button 
+              <button
                 onClick={() => {
                   setAuthDialogTab('signin');
                   setShowAuthDialog(true);
@@ -104,7 +103,6 @@ const Header = () => {
         </div>
       </header>
 
-      {/* Auth Dialog */}
       <AuthDialog
         isOpen={showAuthDialog}
         onClose={() => setShowAuthDialog(false)}
