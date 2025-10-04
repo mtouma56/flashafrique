@@ -135,22 +135,76 @@ const ArticleDetailPage: React.FC = () => {
   };
 
   const summary = article.summary ?? '';
-  const heroImage = article.image_url ?? '/placeholder.svg';
+  const siteUrl = import.meta.env.VITE_SITE_URL ?? 'https://flashafrique.vercel.app';
+  const heroImage = article.image_url && article.image_url.trim() !== '' ? article.image_url : '/placeholder.svg';
+  const heroImageUrl = heroImage.startsWith('http')
+    ? heroImage
+    : `${siteUrl}${heroImage.startsWith('/') ? '' : '/'}${heroImage}`;
+  const normalisedSummary = summary.replace(/\s+/g, ' ').trim();
+  const fallbackDescription =
+    "Suivez l'actualité et les analyses de FlashAfrique pour rester informé sur les tendances du continent.";
+  const metaDescriptionBase = normalisedSummary || fallbackDescription;
+  const metaDescription = metaDescriptionBase.length > 160
+    ? `${metaDescriptionBase.slice(0, 157)}…`
+    : metaDescriptionBase;
+  const canonicalUrl = `${siteUrl}/articles/${article.id}`;
+  const toIsoString = (value: string | null | undefined) => {
+    if (!value) {
+      return undefined;
+    }
+
+    const parsed = new Date(value);
+    return Number.isNaN(parsed.getTime()) ? undefined : parsed.toISOString();
+  };
+  const nowIso = new Date().toISOString();
+  const isoPublishedAt = toIsoString(article.publish_at ?? article.created_at ?? null) ?? nowIso;
+  const isoUpdatedAt = toIsoString(article.updated_at ?? article.publish_at ?? article.created_at ?? null) ?? isoPublishedAt;
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'NewsArticle',
+    mainEntityOfPage: canonicalUrl,
+    headline: article.title,
+    description: metaDescription,
+    image: [heroImageUrl],
+    datePublished: isoPublishedAt,
+    dateModified: isoUpdatedAt,
+    author: {
+      '@type': 'Person',
+      name: article.author || 'FlashAfrique',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'FlashAfrique',
+      logo: {
+        '@type': 'ImageObject',
+        url: `${siteUrl}/icon-512.png`,
+      },
+    },
+  };
+  const pageTitle = `${article.title} - FlashAfrique`;
   const categories = article.category ? [article.category] : [];
 
   return (
     <>
       <Helmet>
-        <title>{article.title} - FlashAfrique</title>
-        <meta name="description" content={summary} />
+        <title>{pageTitle}</title>
+        <link rel="canonical" href={canonicalUrl} />
+        <meta name="description" content={metaDescription} />
+        <meta name="robots" content="index, follow" />
         <meta property="og:title" content={article.title} />
-        <meta property="og:description" content={summary} />
-        <meta property="og:image" content={heroImage} />
+        <meta property="og:description" content={metaDescription} />
+        <meta property="og:image" content={heroImageUrl} />
         <meta property="og:type" content="article" />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:site_name" content="FlashAfrique" />
+        <meta property="article:published_time" content={isoPublishedAt} />
+        <meta property="article:modified_time" content={isoUpdatedAt} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={article.title} />
-        <meta name="twitter:description" content={summary} />
-        <meta name="twitter:image" content={heroImage} />
+        <meta name="twitter:description" content={metaDescription} />
+        <meta name="twitter:image" content={heroImageUrl} />
+        <meta name="twitter:image:alt" content={article.title ?? 'FlashAfrique'} />
+        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </Helmet>
 
       <main className="container mx-auto flex-grow px-4 py-8 sm:px-6 md:py-12 lg:px-8">
